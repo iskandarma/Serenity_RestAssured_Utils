@@ -10,7 +10,7 @@ public class Request {
 
     private final String method;
     private final String path;
-    private final String body;
+    private final Object body;
     private final String token;
     private final Integer statusCode;
     private final String jsonSchemaPath;
@@ -24,7 +24,7 @@ public class Request {
      * @param statusCode
      * @param jsonSchemaPath
      */
-    Request (String method, String path, String body, String token, Integer statusCode, String jsonSchemaPath) {
+    Request (String method, String path, Object body, String token, Integer statusCode, String jsonSchemaPath) {
 
         this.method = method;
         this.path = path;
