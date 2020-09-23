@@ -3,20 +3,21 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>quality.architect</groupId>
-    <artifactId>api-lib</artifactId>
+
+    <groupId>com.github.iskandarma</groupId>
+    <artifactId>serenity-restassured-utils</artifactId>
     <version>0.1.5</version>
     <packaging>jar</packaging>
 
-    <name>Serenity Rest-Assured Utils</name>
-    <description>Serenity Rest-Assured Utils</description>
+    <name>Serenity_Rest-Assured_Utils</name>
+    <description>This project is a collection of some functions and methods for API testing.
+        You can use this project for an automated test project using the serenity rest assured library </description>
     <url>https://github.com/iskandarma/Serenity_RestAssured_Utils</url>
 
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>
             <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-            <distribution>repo</distribution>
         </license>
     </licenses>
 
@@ -55,6 +56,8 @@
         <version.maven-scm-provider-gitexe>1.9.5</version.maven-scm-provider-gitexe>
         <version.maven-source-plugin>3.0.1</version.maven-source-plugin>
         <version.maven-gpg-plugin>1.4</version.maven-gpg-plugin>
+        <version.maven-javadoc-plugin>2.10.4</version.maven-javadoc-plugin>
+        <version.maven-gpg-plugin>1.6</version.maven-gpg-plugin>
     </properties>
 
     <!-- Optional -->
@@ -177,38 +180,36 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${version.maven-javadoc-plugin}</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadoc</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>${version.maven-gpg-plugin}</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
-
-<!--    <profiles>-->
-<!--        &lt;!&ndash; GPG Signature on release &ndash;&gt;-->
-<!--        <profile>-->
-<!--            <id>release-sign-artifacts</id>-->
-<!--            <activation>-->
-<!--                <property>-->
-<!--                    <name>performRelease</name>-->
-<!--                    <value>true</value>-->
-<!--                </property>-->
-<!--            </activation>-->
-<!--            <build>-->
-<!--                <plugins>-->
-<!--                    <plugin>-->
-<!--                        <groupId>org.apache.maven.plugins</groupId>-->
-<!--                        <artifactId>maven-gpg-plugin</artifactId>-->
-<!--                        <version>${version.maven-gpg-plugin}</version>-->
-<!--                        <executions>-->
-<!--                            <execution>-->
-<!--                                <id>sign-artifacts</id>-->
-<!--                                <phase>verify</phase>-->
-<!--                                <goals>-->
-<!--                                    <goal>sign</goal>-->
-<!--                                </goals>-->
-<!--                            </execution>-->
-<!--                        </executions>-->
-<!--                    </plugin>-->
-<!--                </plugins>-->
-<!--            </build>-->
-<!--        </profile>-->
-<!--    </profiles>-->
-
 </project>
