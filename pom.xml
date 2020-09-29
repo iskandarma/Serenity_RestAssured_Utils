@@ -6,7 +6,7 @@
 
     <groupId>com.github.iskandarma</groupId>
     <artifactId>serenity-restassured-utils</artifactId>
-    <version>0.1.5</version>
+    <version>0.1.6</version>
     <packaging>jar</packaging>
 
     <name>Serenity_Rest-Assured_Utils</name>
