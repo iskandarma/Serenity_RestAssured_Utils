@@ -1,11 +1,11 @@
-package builder;
+package quality.architect.builder;
 
 import net.serenitybdd.rest.SerenityRest;
 
 public class RequestBuilder {
 
     private String method;
-    private String path;
+    private String url;
     private Object body;
     private String token;
     private Integer statusCode;
@@ -16,8 +16,8 @@ public class RequestBuilder {
         return this;
     }
 
-    public RequestBuilder setPath(String path) {
-        this.path = path;
+    public RequestBuilder setUrl(String url) {
+        this.url = url;
         return this;
     }
 
@@ -43,17 +43,17 @@ public class RequestBuilder {
 
     /**
      *
-     * @return
+     * @return akan memanggil Request class dan menjalankan constructor
      */
     public Request sendIt(){
-        return new Request(method, path, body, token, statusCode, jsonSchemaPath);
+        return new Request(method, url, body, token, statusCode, jsonSchemaPath);
     }
 
 
     /**
      * Method untuk mengambil nilai dari response
-     * @param resPath
-     * @return
+     * @param resPath Parameter ini diisi dengan nilai field, path, atau key dari response JSON yang akan diambil nilainya
+     * @return Hasilnya akan berupa string
      */
     public String getResponse(String resPath) {
         return SerenityRest

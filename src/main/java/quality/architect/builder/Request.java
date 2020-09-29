@@ -1,15 +1,14 @@
-package builder;
+package quality.architect.builder;
 
 import net.serenitybdd.rest.SerenityRest;
 import quality.architect.spec.SpesificationFactory;
-import quality.architect.utils.TestBase;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 public class Request {
 
     private final String method;
-    private final String path;
+    private final String url;
     private final Object body;
     private final String token;
     private final Integer statusCode;
@@ -17,23 +16,21 @@ public class Request {
 
     /**
      * Post constructor, yang dipanggil ketika digunakan untuk melakukan request Post
-     *
-     * @param path
-     * @param body
-     * @param token
-     * @param statusCode
-     * @param jsonSchemaPath
+     * @param method request method yang ingin digunakan
+     * @param url url lengkap yang akan diuji
+     * @param body body request yang ingin digunakan
+     * @param token Token bearer jika dibutuhkan
+     * @param statusCode status code yang kita ekpektasikan
+     * @param jsonSchemaPath path file json schema yang ingin kita gunakan
      */
-    Request (String method, String path, Object body, String token, Integer statusCode, String jsonSchemaPath) {
+    Request (String method, String url, Object body, String token, Integer statusCode, String jsonSchemaPath) {
 
         this.method = method;
-        this.path = path;
+        this.url = url;
         this.body = body;
         this.token = token;
         this.statusCode = statusCode;
         this.jsonSchemaPath = jsonSchemaPath;
-
-        TestBase.getUrl();
 
         switch (method.toUpperCase()){
             case "POST":
@@ -42,7 +39,7 @@ public class Request {
                         .spec(SpesificationFactory.requestSpecJson(token))
                         .body(body)
                         .when()
-                        .post(path);
+                        .post(url);
                 break;
             case "PUT":
                 SerenityRest
@@ -50,21 +47,21 @@ public class Request {
                         .spec(SpesificationFactory.requestSpecJson(token))
                         .body(body)
                         .when()
-                        .put(path);
+                        .put(url);
                 break;
             case "GET":
                 SerenityRest
                         .given()
                         .spec(SpesificationFactory.requestSpecJson(token))
                         .when()
-                        .get(path);
+                        .get(url);
                 break;
             case "DELETE":
                 SerenityRest
                         .given()
                         .spec(SpesificationFactory.requestSpecJson(token))
                         .when()
-                        .delete(path);
+                        .delete(url);
                 break;
             default:
                 System.out.println("Method Undefined");

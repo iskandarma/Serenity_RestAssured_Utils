@@ -16,27 +16,25 @@
 
     <licenses>
         <license>
-            <name>Apache License, Version 2.0</name>
+            <name>The Apache License, Version 2.0</name>
             <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
         </license>
     </licenses>
 
+    <scm>
+        <connection>scm:git:git://github.com/iskandarma/Serenity_RestAssured_Utils.git</connection>
+        <developerConnection>scm:git:ssh://github.com:iskandarma/Serenity_RestAssured_Utils.git</developerConnection>
+        <url>http://github.com/iskandarma/Serenity_RestAssured_Utils/tree/master</url>
+    </scm>
+
     <developers>
         <developer>
-            <name>Iskandar Maulana</name>
-            <email>mohiskandarma@gmail.com</email>
+            <name>Moh Iskandar Maulana</name>
+            <email>iskandar@alterra.id</email>
             <organization>com.github.iskandarma</organization>
-            <organizationUrl>https://github.com/iskandarma</organizationUrl>
-            <timezone>UTC+07:00</timezone>
+            <organizationUrl>https://github.com/iskandarma/</organizationUrl>
         </developer>
     </developers>
-
-    <scm>
-        <connection>scm:git:git://github.com/dexecutor/dexecutor-core.git</connection>
-        <developerConnection>scm:git:git@github.com:iskandarma/Serenity_RestAssured_Utils.git</developerConnection>
-        <url>https://github.com/iskandarma/Serenity_RestAssured_Utils</url>
-        <tag>HEAD</tag>
-    </scm>
 
     <distributionManagement>
         <snapshotRepository>
@@ -55,19 +53,12 @@
         <version.maven-release-plugin>2.5.3</version.maven-release-plugin>
         <version.maven-scm-provider-gitexe>1.9.5</version.maven-scm-provider-gitexe>
         <version.maven-source-plugin>3.0.1</version.maven-source-plugin>
-        <version.maven-gpg-plugin>1.4</version.maven-gpg-plugin>
         <version.maven-javadoc-plugin>2.10.4</version.maven-javadoc-plugin>
         <version.maven-gpg-plugin>1.6</version.maven-gpg-plugin>
     </properties>
 
     <!-- Optional -->
     <dependencies>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.12</version>
-            <scope>provided</scope>
-        </dependency>
 
         <dependency>
             <groupId>io.rest-assured</groupId>
@@ -100,52 +91,9 @@
                 </configuration>
             </plugin>
             <plugin>
-                <artifactId>maven-deploy-plugin</artifactId>
-                <version>2.8.2</version>
-                <executions>
-                    <execution>
-                        <id>default-deploy</id>
-                        <phase>deploy</phase>
-                        <goals>
-                            <goal>deploy</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>${version.nexus-staging-maven-plugin}</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <serverId>ossrh</serverId>
-                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>${version.maven-release-plugin}</version>
-                <configuration>
-                    <localCheckout>true</localCheckout>
-                    <pushChanges>false</pushChanges>
-                    <mavenExecutorId>forked-path</mavenExecutorId>
-                    <!--suppress UnresolvedMavenProperty -->
-                    <arguments>-Dgpg.passphrase=${gpg.passphrase}</arguments>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.apache.maven.scm</groupId>
-                        <artifactId>maven-scm-provider-gitexe</artifactId>
-                        <version>${version.maven-scm-provider-gitexe}</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-            <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>${version.nexus-staging-maven-plugin}</version>
+                <version>1.6.7</version>
                 <extensions>true</extensions>
                 <configuration>
                     <serverId>ossrh</serverId>
@@ -161,21 +109,7 @@
                     <execution>
                         <id>attach-sources</id>
                         <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <version>1.6</version>
-                <executions>
-                    <execution>
-                        <id>sign-artifacts</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>sign</goal>
+                            <goal>jar-no-fork</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -184,12 +118,9 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>${version.maven-javadoc-plugin}</version>
-                <configuration>
-                    <encoding>UTF-8</encoding>
-                </configuration>
                 <executions>
                     <execution>
-                        <id>attach-javadoc</id>
+                        <id>attach-javadocs</id>
                         <goals>
                             <goal>jar</goal>
                         </goals>
