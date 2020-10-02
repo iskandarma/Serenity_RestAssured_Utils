@@ -54,13 +54,31 @@ public class RestClient {
                 .statusCode(resCode);
     }
 
-    public Response doPostRequest(String path, Object body, String token){
-        return SerenityRest
+    public void doPostRequest(String url, String token, Object body, int resCode, String pathJsonSchema){
+        SerenityRest
                 .given()
                 .spec(SpesificationFactory.requestSpecJson(token))
                 .body(body)
                 .when()
-                .post(path);
+                .post(url)
+                .then()
+                .body(matchesJsonSchemaInClasspath(pathJsonSchema))
+                .statusCode(resCode);
+    }
+
+    public void doPostRequest(String url, String token, Object body, int resCode, boolean log){
+        if (log == true){
+            SerenityRest
+                    .given()
+                    .spec(SpesificationFactory.requestSpecJson(token))
+                    .body(body)
+                    .when()
+                    .post(url)
+                    .then()
+                    .log()
+                    .all()
+                    .statusCode(resCode);
+        }
     }
 
     public Response doPutRequest(String path, Object body){
