@@ -1,6 +1,6 @@
 import org.junit.Test;
 
-public class ReqTest {
+public class RestClientTest {
 
     @Test
     public void testPost(){

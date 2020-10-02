@@ -81,13 +81,42 @@ public class RestClient {
         }
     }
 
-    public Response doPutRequest(String path, Object body){
-        return SerenityRest
+    public void doPutRequest(String url, String token, Object body, int resCode){
+        SerenityRest
                 .given()
-                .spec(SpesificationFactory.requestSpecJson())
+                .spec(SpesificationFactory.requestSpecJson(token))
                 .body(body)
                 .when()
-                .put(path);
+                .put(url)
+                .then()
+                .statusCode(resCode);
+    }
+
+    public void doPutRequest(String url, String token, Object body, int resCode, String pathJsonSchema){
+        SerenityRest
+                .given()
+                .spec(SpesificationFactory.requestSpecJson(token))
+                .body(body)
+                .when()
+                .put(url)
+                .then()
+                .body(matchesJsonSchemaInClasspath(pathJsonSchema))
+                .statusCode(resCode);
+    }
+
+    public void doPutRequest(String url, String token, Object body, int resCode, boolean log){
+        if (log == true){
+            SerenityRest
+                    .given()
+                    .spec(SpesificationFactory.requestSpecJson(token))
+                    .body(body)
+                    .when()
+                    .put(url)
+                    .then()
+                    .log()
+                    .all()
+                    .statusCode(resCode);
+        }
     }
 
     public Response doPutRequest(String path, Object body, String token){
