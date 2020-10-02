@@ -8,41 +8,6 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 
 public class RestClient {
 
-    public void doGetRequest(String url, String token, int resCode){
-        SerenityRest
-                .given()
-                .spec(SpesificationFactory.requestSpecJson(token))
-                .when()
-                .get(url)
-                .then()
-                .statusCode(resCode);
-    }
-
-    public void doGetRequest(String url, String token, int resCode, String pathJsonSchema) {
-        SerenityRest
-                .given()
-                .spec(SpesificationFactory.requestSpecJson(token))
-                .when()
-                .get(url)
-                .then()
-                .body(matchesJsonSchemaInClasspath(pathJsonSchema))
-                .statusCode(resCode);
-    }
-
-    public void doGetRequest(String url, String token, int resCode, boolean log) {
-        if (log == true) {
-            SerenityRest
-                    .given()
-                    .spec(SpesificationFactory.requestSpecJson(token))
-                    .when()
-                    .get(url)
-                    .then()
-                    .log()
-                    .all()
-                    .statusCode(resCode);
-        }
-    }
-
     public void doPostRequest(String url, String token, Object body, int resCode){
         SerenityRest
                 .given()
@@ -119,28 +84,74 @@ public class RestClient {
         }
     }
 
-    public Response doPutRequest(String path, Object body, String token){
-        return SerenityRest
-                .given()
-                .spec(SpesificationFactory.requestSpecJson(token))
-                .body(body)
-                .when()
-                .put(path);
-    }
-
-    public Response doDeleteRequest(String path){
-        return SerenityRest
-                .given()
-                .when()
-                .delete(path);
-    }
-
-    public Response doDeleteRequest(String path, String token){
-        return SerenityRest
+    public void doGetRequest(String url, String token, int resCode){
+        SerenityRest
                 .given()
                 .spec(SpesificationFactory.requestSpecJson(token))
                 .when()
-                .delete(path);
+                .get(url)
+                .then()
+                .statusCode(resCode);
+    }
+
+    public void doGetRequest(String url, String token, int resCode, String pathJsonSchema) {
+        SerenityRest
+                .given()
+                .spec(SpesificationFactory.requestSpecJson(token))
+                .when()
+                .get(url)
+                .then()
+                .body(matchesJsonSchemaInClasspath(pathJsonSchema))
+                .statusCode(resCode);
+    }
+
+    public void doGetRequest(String url, String token, int resCode, boolean log) {
+        if (log == true) {
+            SerenityRest
+                    .given()
+                    .spec(SpesificationFactory.requestSpecJson(token))
+                    .when()
+                    .get(url)
+                    .then()
+                    .log()
+                    .all()
+                    .statusCode(resCode);
+        }
+    }
+
+    public void doDeleteRequest(String url, String token, int resCode){
+        SerenityRest
+                .given()
+                .spec(SpesificationFactory.requestSpecJson(token))
+                .when()
+                .delete(url)
+                .then()
+                .statusCode(resCode);
+    }
+
+    public void doDeleteRequest(String url, String token, int resCode, String pathJsonSchema) {
+        SerenityRest
+                .given()
+                .spec(SpesificationFactory.requestSpecJson(token))
+                .when()
+                .delete(url)
+                .then()
+                .body(matchesJsonSchemaInClasspath(pathJsonSchema))
+                .statusCode(resCode);
+    }
+
+    public void doDeleteRequest(String url, String token, int resCode, boolean log) {
+        if (log == true) {
+            SerenityRest
+                    .given()
+                    .spec(SpesificationFactory.requestSpecJson(token))
+                    .when()
+                    .delete(url)
+                    .then()
+                    .log()
+                    .all()
+                    .statusCode(resCode);
+        }
     }
 
 }
