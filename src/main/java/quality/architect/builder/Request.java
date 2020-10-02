@@ -33,27 +33,12 @@ public class Request {
         this.statusCode = statusCode;
         this.jsonSchemaPath = jsonSchemaPath;
 
+        hitEndpoint(token, body, url);
+        valEndpoint(statusCode, jsonSchemaPath);
 
-
-        if (statusCode == null || jsonSchemaPath == null) {
-            if (statusCode != null) {
-                SerenityRest
-                        .then()
-                        .statusCode(statusCode);
-            } else if (jsonSchemaPath != null){
-                SerenityRest
-                        .then()
-                        .body(matchesJsonSchemaInClasspath(jsonSchemaPath));
-            }
-        } else {
-            SerenityRest
-                    .then()
-                    .statusCode(statusCode)
-                    .body(matchesJsonSchemaInClasspath(jsonSchemaPath));
-        }
     }
 
-    private void hitEndpoint(String token, String body, String url){
+    private void hitEndpoint(String token, Object body, String url){
 
         spesificationFactory = new SpesificationFactory();
 
@@ -91,6 +76,25 @@ public class Request {
             default:
                 System.out.println("Method Undefined");
 
+        }
+    }
+
+    private void valEndpoint(Integer statusCode, String jsonSchemaPath){
+        if (statusCode == null || jsonSchemaPath == null) {
+            if (statusCode != null) {
+                SerenityRest
+                        .then()
+                        .statusCode(statusCode);
+            } else if (jsonSchemaPath != null){
+                SerenityRest
+                        .then()
+                        .body(matchesJsonSchemaInClasspath(jsonSchemaPath));
+            }
+        } else {
+            SerenityRest
+                    .then()
+                    .statusCode(statusCode)
+                    .body(matchesJsonSchemaInClasspath(jsonSchemaPath));
         }
     }
 }
