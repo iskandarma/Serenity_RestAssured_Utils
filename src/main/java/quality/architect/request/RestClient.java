@@ -1,6 +1,5 @@
 package quality.architect.request;
 
-import io.restassured.response.Response;
 import net.serenitybdd.rest.SerenityRest;
 import quality.architect.spec.SpesificationFactory;
 
@@ -8,10 +7,12 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 
 public class RestClient {
 
+    SpesificationFactory spesificationFactory = new SpesificationFactory();
+
     public void doPostRequest(String url, String token, Object body, int resCode){
         SerenityRest
                 .given()
-                .spec(SpesificationFactory.requestSpecJson(token))
+                .spec(spesificationFactory.requestSpecJson(token))
                 .body(body)
                 .when()
                 .post(url)
@@ -22,7 +23,7 @@ public class RestClient {
     public void doPostRequest(String url, String token, Object body, int resCode, String pathJsonSchema){
         SerenityRest
                 .given()
-                .spec(SpesificationFactory.requestSpecJson(token))
+                .spec(spesificationFactory.requestSpecJson(token))
                 .body(body)
                 .when()
                 .post(url)
@@ -35,7 +36,7 @@ public class RestClient {
         if (log == true){
             SerenityRest
                     .given()
-                    .spec(SpesificationFactory.requestSpecJson(token))
+                    .spec(spesificationFactory.requestSpecJson(token))
                     .body(body)
                     .when()
                     .post(url)
@@ -49,7 +50,7 @@ public class RestClient {
     public void doPutRequest(String url, String token, Object body, int resCode){
         SerenityRest
                 .given()
-                .spec(SpesificationFactory.requestSpecJson(token))
+                .spec(spesificationFactory.requestSpecJson(token))
                 .body(body)
                 .when()
                 .put(url)
@@ -60,7 +61,7 @@ public class RestClient {
     public void doPutRequest(String url, String token, Object body, int resCode, String pathJsonSchema){
         SerenityRest
                 .given()
-                .spec(SpesificationFactory.requestSpecJson(token))
+                .spec(spesificationFactory.requestSpecJson(token))
                 .body(body)
                 .when()
                 .put(url)
@@ -73,7 +74,7 @@ public class RestClient {
         if (log == true){
             SerenityRest
                     .given()
-                    .spec(SpesificationFactory.requestSpecJson(token))
+                    .spec(spesificationFactory.requestSpecJson(token))
                     .body(body)
                     .when()
                     .put(url)
@@ -87,7 +88,7 @@ public class RestClient {
     public void doGetRequest(String url, String token, int resCode){
         SerenityRest
                 .given()
-                .spec(SpesificationFactory.requestSpecJson(token))
+                .spec(spesificationFactory.requestSpecJson(token))
                 .when()
                 .get(url)
                 .then()
@@ -97,7 +98,7 @@ public class RestClient {
     public void doGetRequest(String url, String token, int resCode, String pathJsonSchema) {
         SerenityRest
                 .given()
-                .spec(SpesificationFactory.requestSpecJson(token))
+                .spec(spesificationFactory.requestSpecJson(token))
                 .when()
                 .get(url)
                 .then()
@@ -109,7 +110,7 @@ public class RestClient {
         if (log == true) {
             SerenityRest
                     .given()
-                    .spec(SpesificationFactory.requestSpecJson(token))
+                    .spec(spesificationFactory.requestSpecJson(token))
                     .when()
                     .get(url)
                     .then()
@@ -122,7 +123,7 @@ public class RestClient {
     public void doDeleteRequest(String url, String token, int resCode){
         SerenityRest
                 .given()
-                .spec(SpesificationFactory.requestSpecJson(token))
+                .spec(spesificationFactory.requestSpecJson(token))
                 .when()
                 .delete(url)
                 .then()
@@ -132,7 +133,7 @@ public class RestClient {
     public void doDeleteRequest(String url, String token, int resCode, String pathJsonSchema) {
         SerenityRest
                 .given()
-                .spec(SpesificationFactory.requestSpecJson(token))
+                .spec(spesificationFactory.requestSpecJson(token))
                 .when()
                 .delete(url)
                 .then()
@@ -144,7 +145,7 @@ public class RestClient {
         if (log == true) {
             SerenityRest
                     .given()
-                    .spec(SpesificationFactory.requestSpecJson(token))
+                    .spec(spesificationFactory.requestSpecJson(token))
                     .when()
                     .delete(url)
                     .then()
@@ -152,6 +153,19 @@ public class RestClient {
                     .all()
                     .statusCode(resCode);
         }
+    }
+
+    public String getToken(String url, Object body, String tokenPath) {
+        String token =  SerenityRest
+                .given()
+                .spec(spesificationFactory.requestSpecJson())
+                .body(body)
+                .when()
+                .post(url)
+                .then()
+                .extract()
+                .path(tokenPath);
+        return token;
     }
 
 }

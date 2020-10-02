@@ -6,17 +6,17 @@ import io.restassured.specification.RequestSpecification;
 
 public class SpesificationFactory {
 
-    private static RequestSpecBuilder requestSpecBuilder;
-    private static RequestSpecification requestSpecification;
+    private RequestSpecBuilder requestSpecBuilder;
+    private RequestSpecification requestSpecification;
 
-    public static synchronized RequestSpecification requestSpecJson(){
+    public RequestSpecification requestSpecJson(){
         requestSpecBuilder = new RequestSpecBuilder();
         requestSpecBuilder.setContentType(ContentType.JSON);
         requestSpecification = requestSpecBuilder.build();
         return requestSpecification;
     }
 
-    public static synchronized RequestSpecification requestSpecJson(String token){
+    public RequestSpecification requestSpecJson(String token){
         requestSpecBuilder = new RequestSpecBuilder();
         requestSpecBuilder.setContentType(ContentType.JSON);
         requestSpecBuilder.addHeader("Authorization", "Bearer "+token);
