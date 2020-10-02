@@ -13,6 +13,7 @@ public class Request {
     private final String token;
     private final Integer statusCode;
     private final String jsonSchemaPath;
+    private SpesificationFactory spesificationFactory;
 
     /**
      * Post constructor, yang dipanggil ketika digunakan untuk melakukan request Post
@@ -32,41 +33,7 @@ public class Request {
         this.statusCode = statusCode;
         this.jsonSchemaPath = jsonSchemaPath;
 
-        switch (method.toUpperCase()){
-            case "POST":
-                SerenityRest
-                        .given()
-                        .spec(SpesificationFactory.requestSpecJson(token))
-                        .body(body)
-                        .when()
-                        .post(url);
-                break;
-            case "PUT":
-                SerenityRest
-                        .given()
-                        .spec(SpesificationFactory.requestSpecJson(token))
-                        .body(body)
-                        .when()
-                        .put(url);
-                break;
-            case "GET":
-                SerenityRest
-                        .given()
-                        .spec(SpesificationFactory.requestSpecJson(token))
-                        .when()
-                        .get(url);
-                break;
-            case "DELETE":
-                SerenityRest
-                        .given()
-                        .spec(SpesificationFactory.requestSpecJson(token))
-                        .when()
-                        .delete(url);
-                break;
-            default:
-                System.out.println("Method Undefined");
 
-        }
 
         if (statusCode == null || jsonSchemaPath == null) {
             if (statusCode != null) {
@@ -83,6 +50,47 @@ public class Request {
                     .then()
                     .statusCode(statusCode)
                     .body(matchesJsonSchemaInClasspath(jsonSchemaPath));
+        }
+    }
+
+    private void hitEndpoint(String token, String body, String url){
+
+        spesificationFactory = new SpesificationFactory();
+
+        switch (method.toUpperCase()){
+            case "POST":
+                SerenityRest
+                        .given()
+                        .spec(spesificationFactory.requestSpecJson(token))
+                        .body(body)
+                        .when()
+                        .post(url);
+                break;
+            case "PUT":
+                SerenityRest
+                        .given()
+                        .spec(spesificationFactory.requestSpecJson(token))
+                        .body(body)
+                        .when()
+                        .put(url);
+                break;
+            case "GET":
+                SerenityRest
+                        .given()
+                        .spec(spesificationFactory.requestSpecJson(token))
+                        .when()
+                        .get(url);
+                break;
+            case "DELETE":
+                SerenityRest
+                        .given()
+                        .spec(spesificationFactory.requestSpecJson(token))
+                        .when()
+                        .delete(url);
+                break;
+            default:
+                System.out.println("Method Undefined");
+
         }
     }
 }
