@@ -33,12 +33,12 @@ public class Request {
         this.statusCode = statusCode;
         this.jsonSchemaPath = jsonSchemaPath;
 
-        hitEndpoint(token, body, url);
+        hitEndpoint(method, token, body, url);
         valEndpoint(statusCode, jsonSchemaPath);
 
     }
 
-    private void hitEndpoint(String token, Object body, String url){
+    private void hitEndpoint(String method, String token, Object body, String url){
 
         spesificationFactory = new SpesificationFactory();
 
