@@ -1,5 +1,6 @@
 package quality.architect.request;
 
+import io.restassured.http.ContentType;
 import net.serenitybdd.rest.SerenityRest;
 import quality.architect.spec.SpesificationFactory;
 
@@ -7,12 +8,27 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 
 public class RestClient {
 
-    SpesificationFactory spesificationFactory = new SpesificationFactory();
+    SpesificationFactory spesificationFactory;
+
+    RestClient(){
+        spesificationFactory = new SpesificationFactory();
+    }
 
     public void doPostRequest(String url, String token, Object body, int resCode){
         SerenityRest
                 .given()
                 .spec(spesificationFactory.requestSpecJson(token))
+                .body(body)
+                .when()
+                .post(url)
+                .then()
+                .statusCode(resCode);
+    }
+
+    public void doPostRequest(String url, Object body, int resCode){
+        SerenityRest
+                .given()
+                .contentType(ContentType.JSON)
                 .body(body)
                 .when()
                 .post(url)
