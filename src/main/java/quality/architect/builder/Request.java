@@ -13,6 +13,7 @@ public class Request {
     private final String token;
     private final Integer statusCode;
     private final String jsonSchemaPath;
+    private SpesificationFactory spesificationFactory;
 
     /**
      * Post constructor, yang dipanggil ketika digunakan untuk melakukan request Post
@@ -32,11 +33,20 @@ public class Request {
         this.statusCode = statusCode;
         this.jsonSchemaPath = jsonSchemaPath;
 
+        hitEndpoint(method, token, body, url);
+        valEndpoint(statusCode, jsonSchemaPath);
+
+    }
+
+    private void hitEndpoint(String method, String token, Object body, String url){
+
+        spesificationFactory = new SpesificationFactory();
+
         switch (method.toUpperCase()){
             case "POST":
                 SerenityRest
                         .given()
-                        .spec(SpesificationFactory.requestSpecJson(token))
+                        .spec(spesificationFactory.requestSpecJson(token))
                         .body(body)
                         .when()
                         .post(url);
@@ -44,7 +54,7 @@ public class Request {
             case "PUT":
                 SerenityRest
                         .given()
-                        .spec(SpesificationFactory.requestSpecJson(token))
+                        .spec(spesificationFactory.requestSpecJson(token))
                         .body(body)
                         .when()
                         .put(url);
@@ -52,14 +62,14 @@ public class Request {
             case "GET":
                 SerenityRest
                         .given()
-                        .spec(SpesificationFactory.requestSpecJson(token))
+                        .spec(spesificationFactory.requestSpecJson(token))
                         .when()
                         .get(url);
                 break;
             case "DELETE":
                 SerenityRest
                         .given()
-                        .spec(SpesificationFactory.requestSpecJson(token))
+                        .spec(spesificationFactory.requestSpecJson(token))
                         .when()
                         .delete(url);
                 break;
@@ -67,7 +77,9 @@ public class Request {
                 System.out.println("Method Undefined");
 
         }
+    }
 
+    private void valEndpoint(Integer statusCode, String jsonSchemaPath){
         if (statusCode == null || jsonSchemaPath == null) {
             if (statusCode != null) {
                 SerenityRest

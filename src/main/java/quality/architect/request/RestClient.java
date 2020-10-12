@@ -1,75 +1,333 @@
 package quality.architect.request;
 
-import io.restassured.response.Response;
+import io.restassured.http.ContentType;
 import net.serenitybdd.rest.SerenityRest;
 import quality.architect.spec.SpesificationFactory;
 
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+
 public class RestClient {
 
-    public Response doGetRequest(String path){
-        return SerenityRest
-                .given()
-                .when()
-                .get(path);
+    SpesificationFactory spesificationFactory;
+
+    public RestClient(){
+        spesificationFactory = new SpesificationFactory();
     }
 
-    public Response doGetRequest(String path, String token){
-        return SerenityRest
+    public void doPostRequest(String url, String token, Object body, int resCode){
+        SerenityRest
                 .given()
-                .spec(SpesificationFactory.requestSpecJson(token))
-                .when()
-                .get(path);
-    }
-
-    public Response doPostRequest(String path, Object body){
-        return SerenityRest
-                .given()
-                .spec(SpesificationFactory.requestSpecJson())
+                .spec(spesificationFactory.requestSpecJson(token))
                 .body(body)
                 .when()
-                .post(path);
+                .post(url)
+                .then()
+                .statusCode(resCode);
     }
 
-    public Response doPostRequest(String path, Object body, String token){
-        return SerenityRest
+    public void doPostRequest(String url, Object body, int resCode){
+        SerenityRest
                 .given()
-                .spec(SpesificationFactory.requestSpecJson(token))
+                .contentType(ContentType.JSON)
                 .body(body)
                 .when()
-                .post(path);
+                .post(url)
+                .then()
+                .statusCode(resCode);
     }
 
-    public Response doPutRequest(String path, Object body){
-        return SerenityRest
+    public void doPostRequest(String url, String username, String password, Object body, int resCode){
+        SerenityRest
                 .given()
-                .spec(SpesificationFactory.requestSpecJson())
+                .spec(spesificationFactory.requestSpecJson(username, password))
                 .body(body)
                 .when()
-                .put(path);
+                .post(url)
+                .then()
+                .statusCode(resCode);
     }
 
-    public Response doPutRequest(String path, Object body, String token){
-        return SerenityRest
+    public void doPostRequest(String url, String token, Object body, int resCode, String pathJsonSchema){
+        SerenityRest
                 .given()
-                .spec(SpesificationFactory.requestSpecJson(token))
+                .spec(spesificationFactory.requestSpecJson(token))
                 .body(body)
                 .when()
-                .put(path);
+                .post(url)
+                .then()
+                .body(matchesJsonSchemaInClasspath(pathJsonSchema))
+                .statusCode(resCode);
     }
 
-    public Response doDeleteRequest(String path){
-        return SerenityRest
+    public void doPostRequest(String url, String username, String password, Object body, int resCode, String pathJsonSchema){
+        SerenityRest
                 .given()
+                .spec(spesificationFactory.requestSpecJson(username, password))
+                .body(body)
                 .when()
-                .delete(path);
+                .post(url)
+                .then()
+                .body(matchesJsonSchemaInClasspath(pathJsonSchema))
+                .statusCode(resCode);
     }
 
-    public Response doDeleteRequest(String path, String token){
-        return SerenityRest
+    public void doPostXmlRequest(String url, String token, Object body, int resCode, String pathJsonSchema){
+        SerenityRest
                 .given()
-                .spec(SpesificationFactory.requestSpecJson(token))
+                .spec(spesificationFactory.requestSpecXml(token))
+                .body(body)
                 .when()
-                .delete(path);
+                .post(url)
+                .then()
+                .body(matchesJsonSchemaInClasspath(pathJsonSchema))
+                .statusCode(resCode);
+    }
+
+    public void doPostXmlRequest(String url, String username, String password, Object body, int resCode, String pathJsonSchema){
+        SerenityRest
+                .given()
+                .spec(spesificationFactory.requestSpecXml(username, password))
+                .body(body)
+                .when()
+                .post(url)
+                .then()
+                .body(matchesJsonSchemaInClasspath(pathJsonSchema))
+                .statusCode(resCode);
+    }
+
+    public void doPostRequest(String url, String token, Object body, int resCode, boolean log){
+        if (log == true){
+            SerenityRest
+                    .given()
+                    .spec(spesificationFactory.requestSpecJson(token))
+                    .body(body)
+                    .when()
+                    .post(url)
+                    .then()
+                    .log()
+                    .all()
+                    .statusCode(resCode);
+        }
+    }
+
+    public void doPutRequest(String url, String token, Object body, int resCode){
+        SerenityRest
+                .given()
+                .spec(spesificationFactory.requestSpecJson(token))
+                .body(body)
+                .when()
+                .put(url)
+                .then()
+                .statusCode(resCode);
+    }
+
+    public void doPutRequest(String url, String username, String password, Object body, int resCode){
+        SerenityRest
+                .given()
+                .spec(spesificationFactory.requestSpecJson(username, password))
+                .body(body)
+                .when()
+                .put(url)
+                .then()
+                .statusCode(resCode);
+    }
+
+    public void doPutRequest(String url, String token, Object body, int resCode, String pathJsonSchema){
+        SerenityRest
+                .given()
+                .spec(spesificationFactory.requestSpecJson(token))
+                .body(body)
+                .when()
+                .put(url)
+                .then()
+                .body(matchesJsonSchemaInClasspath(pathJsonSchema))
+                .statusCode(resCode);
+    }
+
+    public void doPutRequest(String url, String username, String password, Object body, int resCode, String pathJsonSchema){
+        SerenityRest
+                .given()
+                .spec(spesificationFactory.requestSpecJson(username, password))
+                .body(body)
+                .when()
+                .put(url)
+                .then()
+                .body(matchesJsonSchemaInClasspath(pathJsonSchema))
+                .statusCode(resCode);
+    }
+
+    public void doPutXmlRequest(String url, String token, Object body, int resCode, String pathJsonSchema){
+        SerenityRest
+                .given()
+                .spec(spesificationFactory.requestSpecXml(token))
+                .body(body)
+                .when()
+                .put(url)
+                .then()
+                .body(matchesJsonSchemaInClasspath(pathJsonSchema))
+                .statusCode(resCode);
+    }
+
+    public void doPutXmlRequest(String url, String username, String password, Object body, int resCode, String pathJsonSchema){
+        SerenityRest
+                .given()
+                .spec(spesificationFactory.requestSpecXml(username, password))
+                .body(body)
+                .when()
+                .put(url)
+                .then()
+                .body(matchesJsonSchemaInClasspath(pathJsonSchema))
+                .statusCode(resCode);
+    }
+
+    public void doPutRequest(String url, String token, Object body, int resCode, boolean log){
+        if (log == true){
+            SerenityRest
+                    .given()
+                    .spec(spesificationFactory.requestSpecJson(token))
+                    .body(body)
+                    .when()
+                    .put(url)
+                    .then()
+                    .log()
+                    .all()
+                    .statusCode(resCode);
+        }
+    }
+
+    public void doGetRequest(String url, String token, int resCode){
+        SerenityRest
+                .given()
+                .spec(spesificationFactory.requestSpecJson(token))
+                .when()
+                .get(url)
+                .then()
+                .statusCode(resCode);
+    }
+
+    public void doGetRequest(String url, String username, String password, int resCode){
+        SerenityRest
+                .given()
+                .spec(spesificationFactory.requestSpecJson(username, password))
+                .when()
+                .get(url)
+                .then()
+                .statusCode(resCode);
+    }
+
+    public void doGetRequest(String url, int resCode){
+        SerenityRest
+                .given()
+                .spec(spesificationFactory.requestSpecJson())
+                .when()
+                .get(url)
+                .then()
+                .statusCode(resCode);
+    }
+
+    public void doGetRequest(String url, String token, int resCode, String pathJsonSchema) {
+        SerenityRest
+                .given()
+                .spec(spesificationFactory.requestSpecJson(token))
+                .when()
+                .get(url)
+                .then()
+                .body(matchesJsonSchemaInClasspath(pathJsonSchema))
+                .statusCode(resCode);
+    }
+
+    public void doGetRequest(String url, String username, String password, int resCode, String pathJsonSchema) {
+        SerenityRest
+                .given()
+                .spec(spesificationFactory.requestSpecJson(username, password))
+                .when()
+                .get(url)
+                .then()
+                .body(matchesJsonSchemaInClasspath(pathJsonSchema))
+                .statusCode(resCode);
+    }
+
+    public void doGetRequest(String url, String token, int resCode, boolean log) {
+        if (log == true) {
+            SerenityRest
+                    .given()
+                    .spec(spesificationFactory.requestSpecJson(token))
+                    .when()
+                    .get(url)
+                    .then()
+                    .log()
+                    .all()
+                    .statusCode(resCode);
+        }
+    }
+
+    public void doDeleteRequest(String url, String token, int resCode){
+        SerenityRest
+                .given()
+                .spec(spesificationFactory.requestSpecJson(token))
+                .when()
+                .delete(url)
+                .then()
+                .statusCode(resCode);
+    }
+
+    public void doDeleteRequest(String url, String username, String password, int resCode){
+        SerenityRest
+                .given()
+                .spec(spesificationFactory.requestSpecJson(username, password))
+                .when()
+                .delete(url)
+                .then()
+                .statusCode(resCode);
+    }
+
+    public void doDeleteRequest(String url, String token, int resCode, String pathJsonSchema) {
+        SerenityRest
+                .given()
+                .spec(spesificationFactory.requestSpecJson(token))
+                .when()
+                .delete(url)
+                .then()
+                .body(matchesJsonSchemaInClasspath(pathJsonSchema))
+                .statusCode(resCode);
+    }
+
+    public void doDeleteRequest(String url, String username, String password, int resCode, String pathJsonSchema) {
+        SerenityRest
+                .given()
+                .spec(spesificationFactory.requestSpecJson(username, password))
+                .when()
+                .delete(url)
+                .then()
+                .body(matchesJsonSchemaInClasspath(pathJsonSchema))
+                .statusCode(resCode);
+    }
+
+    public void doDeleteRequest(String url, String token, int resCode, boolean log) {
+        if (log == true) {
+            SerenityRest
+                    .given()
+                    .spec(spesificationFactory.requestSpecJson(token))
+                    .when()
+                    .delete(url)
+                    .then()
+                    .log()
+                    .all()
+                    .statusCode(resCode);
+        }
+    }
+
+    public String getToken(String url, Object body, String tokenPath) {
+        String token =  SerenityRest
+                .given()
+                .spec(spesificationFactory.requestSpecJson())
+                .body(body)
+                .when()
+                .post(url)
+                .then()
+                .extract()
+                .path(tokenPath);
+        return token;
     }
 
 }
