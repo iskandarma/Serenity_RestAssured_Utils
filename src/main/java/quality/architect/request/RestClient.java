@@ -10,7 +10,7 @@ public class RestClient {
 
     SpesificationFactory spesificationFactory;
 
-    RestClient(){
+    public RestClient(){
         spesificationFactory = new SpesificationFactory();
     }
 
@@ -209,6 +209,16 @@ public class RestClient {
         SerenityRest
                 .given()
                 .spec(spesificationFactory.requestSpecJson(username, password))
+                .when()
+                .get(url)
+                .then()
+                .statusCode(resCode);
+    }
+
+    public void doGetRequest(String url, int resCode){
+        SerenityRest
+                .given()
+                .spec(spesificationFactory.requestSpecJson())
                 .when()
                 .get(url)
                 .then()
