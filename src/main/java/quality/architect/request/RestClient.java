@@ -83,6 +83,17 @@ public class RestClient {
                 .statusCode(resCode);
     }
 
+    public void doPostXmlRequest(String url, String username, String password, Object body, int resCode){
+        SerenityRest
+                .given()
+                .spec(spesificationFactory.requestSpecXml(username, password))
+                .body(body)
+                .when()
+                .post(url)
+                .then()
+                .statusCode(resCode);
+    }
+
     public void doPostXmlRequest(String url, String username, String password, Object body, int resCode, String pathJsonSchema){
         SerenityRest
                 .given()
@@ -165,6 +176,17 @@ public class RestClient {
                 .put(url)
                 .then()
                 .body(matchesJsonSchemaInClasspath(pathJsonSchema))
+                .statusCode(resCode);
+    }
+
+    public void doPutXmlRequest(String url, String username, String password, Object body, int resCode){
+        SerenityRest
+                .given()
+                .spec(spesificationFactory.requestSpecXml(username, password))
+                .body(body)
+                .when()
+                .put(url)
+                .then()
                 .statusCode(resCode);
     }
 
