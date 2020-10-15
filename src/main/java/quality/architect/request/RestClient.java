@@ -4,6 +4,8 @@ import io.restassured.http.ContentType;
 import net.serenitybdd.rest.SerenityRest;
 import quality.architect.spec.SpesificationFactory;
 
+import java.util.Map;
+
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 public class RestClient {
@@ -19,6 +21,17 @@ public class RestClient {
                 .given()
                 .spec(spesificationFactory.requestSpecJson(token))
                 .body(body)
+                .when()
+                .post(url)
+                .then()
+                .statusCode(resCode);
+    }
+
+    public void doPostFormDataRequest(String url, String token, Map<String,Object> body, int resCode){
+        SerenityRest
+                .given()
+                .spec(spesificationFactory.requestSpecFormData(token))
+                .params(body)
                 .when()
                 .post(url)
                 .then()
@@ -41,6 +54,17 @@ public class RestClient {
                 .given()
                 .spec(spesificationFactory.requestSpecJson(username, password))
                 .body(body)
+                .when()
+                .post(url)
+                .then()
+                .statusCode(resCode);
+    }
+
+    public void doPostFormDataRequest(String url, String username, String password, Map<String,Object> body, int resCode){
+        SerenityRest
+                .given()
+                .spec(spesificationFactory.requestSpecFormData(username, password))
+                .params(body)
                 .when()
                 .post(url)
                 .then()
