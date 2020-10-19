@@ -47,19 +47,43 @@ public class RestClientTest {
     }
 
     @Test
-    public void jwtTokenwithReqBodyJson() {
+    public void jwtToken() {
 
-        Map<String, Object> requestParam = new HashMap<>();
-        requestParam.put("header", new HashMap<String, String>(){{
+        Map<String, Object> jsonWireMock = new HashMap<>();
+        jsonWireMock.put("header", new HashMap<String, String>(){{
             put("alg","HS256");
             put("typ", "JWT");
         }});
-        requestParam.put("payload", new HashMap<String, String>(){{
+        jsonWireMock.put("payload", new HashMap<String, String>(){{
             put("name","Admin");
             put("id", "123" );
         }});
-        requestParam.put("request", new HashMap<String, Object>(){{
+        jsonWireMock.put("request", new HashMap<String, Object>(){{
             put("url","/jwt");
+            put("method","ANY");
+        }});
+
+        stubFor(requestMatching("jwt-matcher",Parameters.from(jsonWireMock))
+                .willReturn(aResponse().withStatus(200)));
+
+        restClient.doGetRequest(baseUrl+"/jwt",SECURED_TEST_HEADER,200);
+        restClient.doDeleteRequest(baseUrl+"/jwt", SECURED_TEST_HEADER, 200);
+    }
+
+    @Test
+    public void jwtTokenWithReqBodyJson() {
+
+        Map<String, Object> jsonWireMock = new HashMap<>();
+        jsonWireMock.put("header", new HashMap<String, String>(){{
+            put("alg","HS256");
+            put("typ", "JWT");
+        }});
+        jsonWireMock.put("payload", new HashMap<String, String>(){{
+            put("name","Admin");
+            put("id", "123" );
+        }});
+        jsonWireMock.put("request", new HashMap<String, Object>(){{
+            put("url","/jwtwithbody");
             put("method","ANY");
             put("bodyPatterns", new Object[] {new HashMap<String,Object>(){{
                 put("equalToJson", new HashMap<String,Object>(){{
@@ -68,13 +92,14 @@ public class RestClientTest {
             }}});
         }});
 
+        stubFor(requestMatching("jwt-matcher",Parameters.from(jsonWireMock))
+                .willReturn(aResponse().withStatus(200)));
+
         Map<String, Object> bodyJson = new HashMap<>();
         bodyJson.put("key1", "value1");
 
-        stubFor(requestMatching("jwt-matcher",Parameters.from(requestParam))
-                .willReturn(aResponse().withStatus(200)));
-
-        restClient.doPostRequest(baseUrl+"/jwt",SECURED_TEST_HEADER, bodyJson,200);
+        restClient.doPostRequest(baseUrl+"/jwtwithbody",SECURED_TEST_HEADER, bodyJson,200);
+        restClient.doPutRequest(baseUrl+"/jwtwithbody", SECURED_TEST_HEADER, bodyJson, 200);
     }
 
     @Test
