@@ -1,28 +1,80 @@
+import com.github.masonm.Jwt;
+import com.github.tomakehurst.wiremock.WireMockServer;
+import com.github.tomakehurst.wiremock.common.ConsoleNotifier;
+import com.github.tomakehurst.wiremock.common.Slf4jNotifier;
+import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
+import com.github.tomakehurst.wiremock.extension.Parameters;
+import com.github.tomakehurst.wiremock.http.Request;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
+import com.github.tomakehurst.wiremock.matching.MatchResult;
+import com.github.tomakehurst.wiremock.matching.RequestMatcher;
+import com.google.gson.JsonArray;
 import net.serenitybdd.rest.SerenityRest;
+import org.apache.commons.io.FileUtils;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import quality.architect.request.RestClient;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
+import static org.junit.Assert.assertTrue;
 
 public class RestClientTest {
 
     private RestClient restClient;
     private String baseUrl;
+    private final String SECURED_TEST_HEADER = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiQWRtaW4iLCJpZCI6IjEyMyJ9.AqKRNmhFn3xyl7lvtt1pCsvj8OfIh5RpzmKeCZpdEbI";
+
+    WireMockServer wireMockServer = new WireMockServer(wireMockConfig()
+    .extensions("com.github.masonm.JwtMatcherExtension", "com.github.masonm.JwtStubMappingTransformer"));
 
     @Rule
-    public WireMockRule wireMockRule = new WireMockRule(8089); // No-args constructor defaults
+    public WireMockRule wireMockRule = new WireMockRule(WireMockConfiguration.options().port(8089).notifier(new ConsoleNotifier(true)).extensions("com.github.masonm.JwtMatcherExtension", "com.github.masonm.JwtStubMappingTransformer")); // No-args constructor defaults
 
     @Before
     public void before(){
         restClient = new RestClient();
         baseUrl = "http://localhost:8089";
+    }
+
+    @Test
+    public void jwtTokenwithReqBodyJson() {
+
+        Map<String, Object> requestParam = new HashMap<>();
+        requestParam.put("header", new HashMap<String, String>(){{
+            put("alg","HS256");
+            put("typ", "JWT");
+        }});
+        requestParam.put("payload", new HashMap<String, String>(){{
+            put("name","Admin");
+            put("id", "123" );
+        }});
+        requestParam.put("request", new HashMap<String, Object>(){{
+            put("url","/jwt");
+            put("method","ANY");
+            put("bodyPatterns", new Object[] {new HashMap<String,Object>(){{
+                put("equalToJson", new HashMap<String,Object>(){{
+                    put("key1","value1");
+                }});
+            }}});
+        }});
+
+        Map<String, Object> bodyJson = new HashMap<>();
+        bodyJson.put("key1", "value1");
+
+        stubFor(requestMatching("jwt-matcher",Parameters.from(requestParam))
+                .willReturn(aResponse().withStatus(200)));
+
+        restClient.doPostRequest(baseUrl+"/jwt",SECURED_TEST_HEADER, bodyJson,200);
     }
 
     @Test
