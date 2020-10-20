@@ -63,8 +63,7 @@ public class RestClient {
     public void doPostFormDataRequest(String url, String username, String password, Map<String,Object> body, int resCode){
         SerenityRest
                 .given()
-                .spec(spesificationFactory.requestSpecFormData(username, password))
-                .params(body)
+                .spec(spesificationFactory.requestSpecFormData(username, password, body))
                 .when()
                 .post(url)
                 .then()

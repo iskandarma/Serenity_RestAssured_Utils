@@ -9,6 +9,9 @@ import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import com.github.tomakehurst.wiremock.matching.MatchResult;
 import com.github.tomakehurst.wiremock.matching.RequestMatcher;
 import com.google.gson.JsonArray;
+import io.restassured.RestAssured;
+import io.restassured.config.EncoderConfig;
+import io.restassured.http.ContentType;
 import net.serenitybdd.rest.SerenityRest;
 import org.apache.commons.io.FileUtils;
 import org.junit.Before;
@@ -103,6 +106,39 @@ public class RestClientTest {
     }
 
     @Test
+    public void jwtTokenWithMultiPartReqBody(){
+
+        Map<String, Object> bodyFormData = new HashMap<>();
+        bodyFormData.put("username", "test");
+        bodyFormData.put("password", "123");
+
+        givenThat(post(urlPathEqualTo("/basic/withformdatabody"))
+                .withMultipartRequestBody(aMultipart()
+                        .withName("username")
+                        .withBody(containing("test")))
+                .withMultipartRequestBody(aMultipart()
+                        .withName("password")
+                        .withBody(containing("123")))
+                .withMultipartRequestBody(aMultipart()
+                        .withName("file")
+                        .withBody(binaryEqualTo("ABCD".getBytes())))
+                .willReturn(aResponse()
+                        .withStatus(200)));
+
+        SerenityRest
+                .given()
+                .multiPart("username", "test")
+                .multiPart("password", "123")
+                .multiPart("file", new File("src/test/resources/abc.txt"))
+                .when()
+                .post(baseUrl+"/basic/withformdatabody")
+                .then()
+                .statusCode(200);
+
+//        restClient.doPostFormDataRequest(baseUrl+"/basic/withformdatabody", "test", "123", bodyFormData, 200);
+    }
+
+    @Test
     public void basicAuth() {
 
         givenThat(any(urlPathEqualTo("/basic"))
@@ -159,13 +195,10 @@ public class RestClientTest {
     }
 
     @Test
-    public void basicAuthWithMultiPartBodyReq(){
-
-        Map<String, Object> bodyFormData = new HashMap<>();
-        bodyFormData.put("username", "test");
-        bodyFormData.put("password", "123");
+    public void basicAuthWithMultiPartReqBody(){
 
         givenThat(post(urlPathEqualTo("/basic/withformdatabody"))
+                .withBasicAuth("test","123")
                 .withMultipartRequestBody(aMultipart()
                     .withName("username")
                     .withBody(containing("test")))
@@ -180,6 +213,7 @@ public class RestClientTest {
 
         SerenityRest
                 .given()
+                .auth().preemptive().basic("test", "123")
                 .multiPart("username", "test")
                 .multiPart("password", "123")
                 .multiPart("file", new File("src/test/resources/abc.txt"))
@@ -188,7 +222,22 @@ public class RestClientTest {
                 .then()
                 .statusCode(200);
 
-//        restClient.doPostFormDataRequest(baseUrl+"/basic/withformdatabody", "test", "123", bodyFormData, 200);
+        Map<String, Object> bodyFormData = new HashMap<>();
+        bodyFormData.put("username", "test");
+        bodyFormData.put("password", "123");
+        bodyFormData.put("file", new File("src/test/resources/abc.txt"));
+
+//        RestAssured
+//                .given()
+//                .auth().preemptive().basic("test","123")
+//                .config(RestAssured.config().encoderConfig(EncoderConfig.encoderConfig().appendDefaultContentCharsetToContentTypeIfUndefined(false).encodeContentTypeAs("multipart/form-data", ContentType.TEXT)))
+//                .params(bodyFormData)
+//                .when()
+//                .post(baseUrl+"/basic/withformdatabody")
+//                .then()
+//                .statusCode(200);
+
+        restClient.doPostFormDataRequest(baseUrl+"/basic/withformdatabody", "test", "123", bodyFormData, 200);
     }
 
 }

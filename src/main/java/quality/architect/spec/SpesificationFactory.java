@@ -9,6 +9,10 @@ import io.restassured.config.RestAssuredConfig;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 
+import java.io.File;
+import java.util.Map;
+import java.util.regex.Pattern;
+
 public class SpesificationFactory {
 
     private RequestSpecBuilder requestSpecBuilder;
@@ -86,16 +90,25 @@ public class SpesificationFactory {
         return requestSpecification;
     }
 
-    public RequestSpecification requestSpecFormData(String username, String password){
+    public RequestSpecification requestSpecFormData(String username, String password, Map<String,Object> body){
 
         preemptiveBasicAuthScheme = new PreemptiveBasicAuthScheme();
         preemptiveBasicAuthScheme.setUserName(username);
         preemptiveBasicAuthScheme.setPassword(password);
 
         requestSpecBuilder = new RequestSpecBuilder();
-        requestSpecBuilder.setUrlEncodingEnabled(true);
-        requestSpecBuilder.setConfig(RestAssuredConfig.config().encoderConfig(EncoderConfig.encoderConfig().encodeContentTypeAs("multipart/form-data", ContentType.TEXT)));
+        requestSpecBuilder.setContentType("multipart/form-data");
         requestSpecBuilder.setAuth(preemptiveBasicAuthScheme);
+        for (Map.Entry<String,Object> entry : body.entrySet())
+        {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+            if (value.toString().contains("/") && value.toString().contains(".")){
+                requestSpecBuilder.addMultiPart(key, (File) value);
+            } else {
+                requestSpecBuilder.addMultiPart(key, (String) value);
+            }
+        }
         requestSpecification = requestSpecBuilder.build();
         return requestSpecification;
     }
