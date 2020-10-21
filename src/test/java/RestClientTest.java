@@ -197,7 +197,7 @@ public class RestClientTest {
     @Test
     public void basicAuthWithMultiPartReqBody(){
 
-        givenThat(post(urlPathEqualTo("/basic/withformdatabody"))
+        givenThat(any(urlPathEqualTo("/basic/withformdatabody"))
                 .withBasicAuth("test","123")
                 .withMultipartRequestBody(aMultipart()
                     .withName("username")
@@ -211,33 +211,13 @@ public class RestClientTest {
                 .willReturn(aResponse()
                     .withStatus(200)));
 
-        SerenityRest
-                .given()
-                .auth().preemptive().basic("test", "123")
-                .multiPart("username", "test")
-                .multiPart("password", "123")
-                .multiPart("file", new File("src/test/resources/abc.txt"))
-                .when()
-                .post(baseUrl+"/basic/withformdatabody")
-                .then()
-                .statusCode(200);
-
         Map<String, Object> bodyFormData = new HashMap<>();
         bodyFormData.put("username", "test");
         bodyFormData.put("password", "123");
         bodyFormData.put("file", new File("src/test/resources/abc.txt"));
 
-//        RestAssured
-//                .given()
-//                .auth().preemptive().basic("test","123")
-//                .config(RestAssured.config().encoderConfig(EncoderConfig.encoderConfig().appendDefaultContentCharsetToContentTypeIfUndefined(false).encodeContentTypeAs("multipart/form-data", ContentType.TEXT)))
-//                .params(bodyFormData)
-//                .when()
-//                .post(baseUrl+"/basic/withformdatabody")
-//                .then()
-//                .statusCode(200);
-
         restClient.doPostFormDataRequest(baseUrl+"/basic/withformdatabody", "test", "123", bodyFormData, 200);
+        restClient.doPutFormDataRequest(baseUrl+"/basic/withformdatabody", "test", "123", bodyFormData, 200);
     }
 
 }

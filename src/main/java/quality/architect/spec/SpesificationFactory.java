@@ -113,4 +113,24 @@ public class SpesificationFactory {
         return requestSpecification;
     }
 
+    public RequestSpecification requestSpecFormData(String token, Map<String,Object> body){
+
+        requestSpecBuilder = new RequestSpecBuilder();
+        requestSpecBuilder.addHeader("Authorization", "Bearer "+token);
+        requestSpecBuilder.setContentType("multipart/form-data");
+        requestSpecBuilder.setAuth(preemptiveBasicAuthScheme);
+        for (Map.Entry<String,Object> entry : body.entrySet())
+        {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+            if (value.toString().contains("/") && value.toString().contains(".")){
+                requestSpecBuilder.addMultiPart(key, (File) value);
+            } else {
+                requestSpecBuilder.addMultiPart(key, (String) value);
+            }
+        }
+        requestSpecification = requestSpecBuilder.build();
+        return requestSpecification;
+    }
+
 }

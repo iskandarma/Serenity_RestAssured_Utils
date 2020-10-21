@@ -210,6 +210,16 @@ public class RestClient {
                 .statusCode(resCode);
     }
 
+    public void doPutFormDataRequest(String url, String username, String password, Map<String,Object> body, int resCode){
+        SerenityRest
+                .given()
+                .spec(spesificationFactory.requestSpecFormData(username, password, body))
+                .when()
+                .put(url)
+                .then()
+                .statusCode(resCode);
+    }
+
     public void doGetRequest(String url, String token, int resCode){
         SerenityRest
                 .given()
