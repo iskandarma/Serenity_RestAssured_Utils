@@ -1,51 +1,34 @@
-import com.github.masonm.Jwt;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.common.ConsoleNotifier;
-import com.github.tomakehurst.wiremock.common.Slf4jNotifier;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import com.github.tomakehurst.wiremock.extension.Parameters;
-import com.github.tomakehurst.wiremock.http.Request;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
-import com.github.tomakehurst.wiremock.matching.MatchResult;
-import com.github.tomakehurst.wiremock.matching.RequestMatcher;
-import com.google.gson.JsonArray;
-import io.restassured.RestAssured;
-import io.restassured.config.EncoderConfig;
-import io.restassured.http.ContentType;
 import net.serenitybdd.rest.SerenityRest;
-import org.apache.commons.io.FileUtils;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import quality.architect.request.RestClient;
+import quality.architect.request.RestMethod;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 import static org.junit.Assert.assertTrue;
 
-public class RestClientTest {
+public class RestMethodTest {
 
-    private RestClient restClient;
+    private RestMethod restMethod;
     private String baseUrl;
     private final String SECURED_TEST_HEADER = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiQWRtaW4iLCJpZCI6IjEyMyJ9.AqKRNmhFn3xyl7lvtt1pCsvj8OfIh5RpzmKeCZpdEbI";
-
-    WireMockServer wireMockServer = new WireMockServer(wireMockConfig()
-    .extensions("com.github.masonm.JwtMatcherExtension", "com.github.masonm.JwtStubMappingTransformer"));
 
     @Rule
     public WireMockRule wireMockRule = new WireMockRule(WireMockConfiguration.options().port(8089).notifier(new ConsoleNotifier(true)).extensions("com.github.masonm.JwtMatcherExtension", "com.github.masonm.JwtStubMappingTransformer")); // No-args constructor defaults
 
     @Before
     public void before(){
-        restClient = new RestClient();
+        restMethod = new RestMethod();
         baseUrl = "http://localhost:8089";
     }
 
@@ -69,8 +52,8 @@ public class RestClientTest {
         stubFor(requestMatching("jwt-matcher",Parameters.from(jsonWireMock))
                 .willReturn(aResponse().withStatus(200)));
 
-        restClient.doGetRequest(baseUrl+"/jwt",SECURED_TEST_HEADER,200);
-        restClient.doDeleteRequest(baseUrl+"/jwt", SECURED_TEST_HEADER, 200);
+        restMethod.doGetRequest(baseUrl+"/jwt",SECURED_TEST_HEADER,200);
+        restMethod.doDeleteRequest(baseUrl+"/jwt", SECURED_TEST_HEADER, 200);
     }
 
     @Test
@@ -101,8 +84,8 @@ public class RestClientTest {
         Map<String, Object> bodyJson = new HashMap<>();
         bodyJson.put("key1", "value1");
 
-        restClient.doPostRequest(baseUrl+"/jwtwithbody",SECURED_TEST_HEADER, bodyJson,200);
-        restClient.doPutRequest(baseUrl+"/jwtwithbody", SECURED_TEST_HEADER, bodyJson, 200);
+        restMethod.doPostRequest(baseUrl+"/jwtwithbody",SECURED_TEST_HEADER, bodyJson,200);
+        restMethod.doPutRequest(baseUrl+"/jwtwithbody", SECURED_TEST_HEADER, bodyJson, 200);
     }
 
     @Test
@@ -147,8 +130,8 @@ public class RestClientTest {
                     .withStatus(200)
                     .withHeader("Content-Type", "application/json")));
 
-        restClient.doGetRequest(baseUrl+"/basic", "test", "123", 200);
-        restClient.doDeleteRequest(baseUrl+"/basic", "test", "123", 200);
+        restMethod.doGetRequest(baseUrl+"/basic", "test", "123", 200);
+        restMethod.doDeleteRequest(baseUrl+"/basic", "test", "123", 200);
     }
 
     @Test
@@ -165,8 +148,8 @@ public class RestClientTest {
         bodyJson.put("username", "test");
         bodyJson.put("password", "123");
 
-        restClient.doPostRequest(baseUrl+"/basic/withjsonbody","test", "123", bodyJson, 200);
-        restClient.doPutRequest(baseUrl+"/basic/withjsonbody", "test", "123", bodyJson, 200);
+        restMethod.doPostRequest(baseUrl+"/basic/withjsonbody","test", "123", bodyJson, 200);
+        restMethod.doPutRequest(baseUrl+"/basic/withjsonbody", "test", "123", bodyJson, 200);
     }
 
     @Test
@@ -190,8 +173,8 @@ public class RestClientTest {
                 .willReturn(aResponse()
                         .withStatus(200)));
 
-        restClient.doPostXmlRequest(baseUrl+"/basic/withxmlbody","test", "123", req, 200);
-        restClient.doPutXmlRequest(baseUrl+"/basic/withxmlbody", "test", "123", req, 200);
+        restMethod.doPostXmlRequest(baseUrl+"/basic/withxmlbody","test", "123", req, 200);
+        restMethod.doPutXmlRequest(baseUrl+"/basic/withxmlbody", "test", "123", req, 200);
     }
 
     @Test
@@ -216,8 +199,8 @@ public class RestClientTest {
         bodyFormData.put("password", "123");
         bodyFormData.put("file", new File("src/test/resources/abc.txt"));
 
-        restClient.doPostFormDataRequest(baseUrl+"/basic/withformdatabody", "test", "123", bodyFormData, 200);
-        restClient.doPutFormDataRequest(baseUrl+"/basic/withformdatabody", "test", "123", bodyFormData, 200);
+        restMethod.doPostFormDataRequest(baseUrl+"/basic/withformdatabody", "test", "123", bodyFormData, 200);
+        restMethod.doPutFormDataRequest(baseUrl+"/basic/withformdatabody", "test", "123", bodyFormData, 200);
     }
 
 }

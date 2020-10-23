@@ -8,11 +8,11 @@ import java.util.Map;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
-public class RestClient {
+public class RestMethod {
 
     SpesificationFactory spesificationFactory;
 
-    public RestClient(){
+    public RestMethod(){
         spesificationFactory = new SpesificationFactory();
     }
 
