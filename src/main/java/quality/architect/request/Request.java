@@ -132,7 +132,7 @@ public interface Request {
          * @param body The JSON body request to send.
          * @param resCode The response code.
          */
-        void put(String url, String token, Object body, int resCode);
+    void put(String url, String token, Object body, int resCode);
 
         /**
          * Put request using JWT Token for authentication and JSON for request body.
@@ -142,7 +142,7 @@ public interface Request {
          * @param resCode The response code.
          * @param jsonSchemaPath The JSON Schema Path. ex : "resources/jsonSchema/jsonSchemaName.json"
          */
-        void put(String url, String token, Object body, int resCode, String jsonSchemaPath);
+    void put(String url, String token, Object body, int resCode, String jsonSchemaPath);
 
         /**
          * Put request using basic auth for authentication and JSON for request body.
@@ -152,7 +152,7 @@ public interface Request {
          * @param body The JSON body request to send.
          * @param resCode The response code.
          */
-        void put(String url, String username, String password, Object body, int resCode);
+    void put(String url, String username, String password, Object body, int resCode);
 
         /**
          * Put request using basic auth for authentication and JSON for request body.
@@ -163,7 +163,7 @@ public interface Request {
          * @param resCode The response code.
          * @param jsonSchemaPath The JSON Schema Path. ex : "resources/jsonSchema/jsonSchemaName.json"
          */
-        void put(String url, String username, String password, Object body, int resCode, String jsonSchemaPath);
+    void put(String url, String username, String password, Object body, int resCode, String jsonSchemaPath);
 
         /**
          * Put request using JWT Token for authentication and XML for request body.
@@ -172,7 +172,7 @@ public interface Request {
          * @param body The XML body request to send.
          * @param resCode The response code.
          */
-        void putXml(String url, String token, Object body, int resCode);
+    void putXml(String url, String token, Object body, int resCode);
 
         /**
          * Put request using JWT Token for authentication and XML for request body.
@@ -182,7 +182,7 @@ public interface Request {
          * @param resCode The response code.
          * @param jsonSchemaPath The JSON Schema Path. ex : "resources/jsonSchema/jsonSchemaName.json"
          */
-        void putXml(String url, String token, Object body, int resCode, String jsonSchemaPath);
+    void putXml(String url, String token, Object body, int resCode, String jsonSchemaPath);
 
         /**
          * Put request using basic auth for authentication and XML for request body.
@@ -192,7 +192,7 @@ public interface Request {
          * @param body The XML body request to send.
          * @param resCode The response code.
          */
-        void putXml(String url, String username, String password, Object body, int resCode);
+    void putXml(String url, String username, String password, Object body, int resCode);
 
         /**
          * Put request using basic auth for authentication and XML for request body.
@@ -203,7 +203,7 @@ public interface Request {
          * @param resCode The response code.
          * @param jsonSchemaPath The JSON Schema Path. ex : "resources/jsonSchema/jsonSchemaName.json"
          */
-        void putXml(String url, String username, String password, Object body, int resCode, String jsonSchemaPath);
+    void putXml(String url, String username, String password, Object body, int resCode, String jsonSchemaPath);
 
         /**
          * Put request using JWT Token for authentication and Multipart/form-data for request body.
@@ -212,7 +212,7 @@ public interface Request {
          * @param body The Multipart/form-data body request to send.
          * @param resCode The response code.
          */
-        void putMultipart(String url, String token, Object body, int resCode);
+    void putMultipart(String url, String token, Object body, int resCode);
 
         /**
          * Put request using JWT Token for authentication and Multipart/form-data for request body.
@@ -222,7 +222,7 @@ public interface Request {
          * @param resCode The response code.
          * @param jsonSchemaPath The JSON Schema Path. ex : "resources/jsonSchema/jsonSchemaName.json"
          */
-        void putMultipart(String url, String token, Object body, int resCode, String jsonSchemaPath);
+    void putMultipart(String url, String token, Object body, int resCode, String jsonSchemaPath);
 
         /**
          * Put request using basic auth for authentication and Multipart/form-data for request body.
@@ -232,7 +232,7 @@ public interface Request {
          * @param body The Multipart/form-data body request to send.
          * @param resCode The response code.
          */
-        void putMultipart(String url, String username, String password, Object body, int resCode);
+    void putMultipart(String url, String username, String password, Object body, int resCode);
 
         /**
          * Put request using basic auth for authentication and Multipart/form-data for request body.
@@ -243,7 +243,7 @@ public interface Request {
          * @param resCode The response code.
          * @param jsonSchemaPath The JSON Schema Path. ex : "resources/jsonSchema/jsonSchemaName.json"
          */
-        void putMultipart(String url, String username, String password, Object body, int resCode, String jsonSchemaPath);
+    void putMultipart(String url, String username, String password, Object body, int resCode, String jsonSchemaPath);
 
         /**
          * Get request using JWT Token for authentication.
@@ -251,16 +251,16 @@ public interface Request {
          * @param token The JWT token.
          * @param resCode The response code.
          */
-        void get(String url, String token, int resCode);
+    void get(String url, String token, int resCode);
 
         /**
-         * Get request using JWT Token for authentication.
+         * Get request using JWT Token for authentication and JSON Schema Path..
          * @param url The URL of endpoint.
          * @param token The JWT token.
          * @param resCode The response code.
          * @param jsonSchemaPath The JSON Schema Path. ex : "resources/jsonSchema/jsonSchemaName.json"
          */
-        void get(String url, String token, int resCode, String jsonSchemaPath);
+    void get(String url, String token, int resCode, String jsonSchemaPath);
 
         /**
          * Get request using basic auth for authentication.
@@ -269,16 +269,52 @@ public interface Request {
          * @param password The password.
          * @param resCode The response code.
          */
-        void get(String url, String username, String password, int resCode);
+    void get(String url, String username, String password, int resCode);
 
         /**
-         * Get request using basic auth for authentication.
+         * Get request using basic auth for authentication and JSON Schema Path.
          * @param url The URL of endpoint.
          * @param username The username.
          * @param password The password.
          * @param resCode The response code.
          * @param jsonSchemaPath The JSON Schema Path. ex : "resources/jsonSchema/jsonSchemaName.json"
          */
-        void get(String url, String username, String password, int resCode, String jsonSchemaPath);
+    void get(String url, String username, String password, int resCode, String jsonSchemaPath);
+
+        /**
+         * Delete request using JWT Token for authentication.
+         * @param url The URL of endpoint.
+         * @param token The JWT token.
+         * @param resCode The response code.
+         */
+    void delete(String url, String token, int resCode);
+
+        /**
+         * Delete request using JWT Token for authentication and JSON Schema Path.
+         * @param url The URL of endpoint.
+         * @param token The JWT token.
+         * @param resCode The response code.
+         * @param jsonSchemaPath The JSON Schema Path. ex : "resources/jsonSchema/jsonSchemaName.json"
+         */
+    void delete(String url, String token, int resCode, String jsonSchemaPath);
+
+        /**
+         * Delete request using basic auth for authentication.
+         * @param url The URL of endpoint.
+         * @param username The username.
+         * @param password The password.
+         * @param resCode The response code.
+         */
+    void delete(String url, String username, String password, int resCode);
+
+        /**
+         * Get request using basic auth for authentication and JSON Schema Path.
+         * @param url The URL of endpoint.
+         * @param username The username.
+         * @param password The password.
+         * @param resCode The response code.
+         * @param jsonSchemaPath The JSON Schema Path. ex : "resources/jsonSchema/jsonSchemaName.json"
+         */
+    void delete(String url, String username, String password, int resCode, String jsonSchemaPath);
 
 }
