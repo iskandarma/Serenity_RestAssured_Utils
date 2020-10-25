@@ -6,7 +6,7 @@ package quality.architect.request;
 public interface Request {
 
         /**
-         * Post request using JWT Token for authentication and JSON for request body.
+         * Post request, JWT token authentication and JSON request body usage.
          * @param url The URL of endpoint.
          * @param token The JWT token.
          * @param body The JSON body request to send.
@@ -15,7 +15,7 @@ public interface Request {
     void post(String url, String token, Object body, int resCode);
 
         /**
-         * Post request using JWT Token for authentication and JSON for request body.
+         * Post request, JWT token authentication, JSON request body and JSON schema validation usage.
          * @param url The URL of endpoint.
          * @param token The JWT token.
          * @param body The JSON body request to send.
@@ -25,7 +25,7 @@ public interface Request {
     void post(String url, String token, Object body, int resCode, String jsonSchemaPath);
 
         /**
-         * Post request using basic auth for authentication and JSON for request body.
+         * Post request, basic authentication and JSON request body usage.
          * @param url The URL of endpoint.
          * @param username The username.
          * @param password The password.
@@ -35,7 +35,7 @@ public interface Request {
     void post(String url, String username, String password, Object body, int resCode);
 
         /**
-         * Post request using basic auth for authentication and JSON for request body.
+         * Post request, basic authentication, JSON request body and JSON schema validation usage.
          * @param url The URL of endpoint.
          * @param username The username.
          * @param password The password.
@@ -46,7 +46,7 @@ public interface Request {
     void post(String url, String username, String password, Object body, int resCode, String jsonSchemaPath);
 
         /**
-         * Post request using JWT Token for authentication and XML for request body.
+         * Post request, JWT token authentication and XML request body usage.
          * @param url The URL of endpoint.
          * @param token The JWT token.
          * @param body The XML body request to send.
@@ -55,17 +55,7 @@ public interface Request {
     void postXml(String url, String token, Object body, int resCode);
 
         /**
-         * Post request using JWT Token for authentication and XML for request body.
-         * @param url The URL of endpoint.
-         * @param token The JWT token.
-         * @param body The XML body request to send.
-         * @param resCode The response code.
-         * @param jsonSchemaPath The JSON Schema Path. ex : "resources/jsonSchema/jsonSchemaName.json"
-         */
-    void postXml(String url, String token, Object body, int resCode, String jsonSchemaPath);
-
-        /**
-         * Post request using basic auth for authentication and XML for request body.
+         * Post request, basic authentication and XML request body usage.
          * @param url The URL of endpoint.
          * @param username The username.
          * @param password The password.
@@ -75,18 +65,7 @@ public interface Request {
     void postXml(String url, String username, String password, Object body, int resCode);
 
         /**
-         * Post request using basic auth for authentication and XML for request body.
-         * @param url The URL of endpoint.
-         * @param username The username.
-         * @param password The password.
-         * @param body The XML body request to send.
-         * @param resCode The response code.
-         * @param jsonSchemaPath The JSON Schema Path. ex : "resources/jsonSchema/jsonSchemaName.json"
-         */
-    void postXml(String url, String username, String password, Object body, int resCode, String jsonSchemaPath);
-
-        /**
-         * Post request using JWT Token for authentication and Multipart/form-data for request body.
+         * Post request, JWT token authentication and multipart/form-data request body usage.
          * @param url The URL of endpoint.
          * @param token The JWT token.
          * @param body The Multipart/form-data body request to send.
@@ -95,7 +74,7 @@ public interface Request {
     void postMultipart(String url, String token, Object body, int resCode);
 
         /**
-         * Post request using JWT Token for authentication and Multipart/form-data for request body.
+         * Post request, JWT token authentication, multipart/form-data request body and JSON schema validation usage.
          * @param url The URL of endpoint.
          * @param token The JWT token.
          * @param body The Multipart/form-data body request to send.
@@ -105,7 +84,7 @@ public interface Request {
     void postMultipart(String url, String token, Object body, int resCode, String jsonSchemaPath);
 
         /**
-         * Post request using basic auth for authentication and Multipart/form-data for request body.
+         * Post request, basic authentication and multipart/form-data request body usage.
          * @param url The URL of endpoint.
          * @param username The username.
          * @param password The password.
@@ -115,7 +94,7 @@ public interface Request {
     void postMultipart(String url, String username, String password, Object body, int resCode);
 
         /**
-         * Post request using basic auth for authentication and Multipart/form-data for request body.
+         * Post request, basic authentication, multipart/form-data request body and JSON schema validation usage.
          * @param url The URL of endpoint.
          * @param username The username.
          * @param password The password.
@@ -126,7 +105,7 @@ public interface Request {
     void postMultipart(String url, String username, String password, Object body, int resCode, String jsonSchemaPath);
 
         /**
-         * Put request using JWT Token for authentication and JSON for request body.
+         * Put request, JWT token authentication and JSON request body usage.
          * @param url The URL of endpoint.
          * @param token The JWT token.
          * @param body The JSON body request to send.
@@ -135,7 +114,7 @@ public interface Request {
     void put(String url, String token, Object body, int resCode);
 
         /**
-         * Put request using JWT Token for authentication and JSON for request body.
+         * Put request, JWT token authentication, JSON request body and JSON schema validation usage.
          * @param url The URL of endpoint.
          * @param token The JWT token.
          * @param body The JSON body request to send.
@@ -145,7 +124,7 @@ public interface Request {
     void put(String url, String token, Object body, int resCode, String jsonSchemaPath);
 
         /**
-         * Put request using basic auth for authentication and JSON for request body.
+         * Put request, basic authentication and JSON request body usage.
          * @param url The URL of endpoint.
          * @param username The username.
          * @param password The password.
@@ -155,7 +134,7 @@ public interface Request {
     void put(String url, String username, String password, Object body, int resCode);
 
         /**
-         * Put request using basic auth for authentication and JSON for request body.
+         * Put request, basic authentication, JSON request body JSON schema validation usage.
          * @param url The URL of endpoint.
          * @param username The username.
          * @param password The password.
@@ -166,7 +145,7 @@ public interface Request {
     void put(String url, String username, String password, Object body, int resCode, String jsonSchemaPath);
 
         /**
-         * Put request using JWT Token for authentication and XML for request body.
+         * Put request, JWT token authentication and XML request body usage.
          * @param url The URL of endpoint.
          * @param token The JWT token.
          * @param body The XML body request to send.
@@ -175,17 +154,7 @@ public interface Request {
     void putXml(String url, String token, Object body, int resCode);
 
         /**
-         * Put request using JWT Token for authentication and XML for request body.
-         * @param url The URL of endpoint.
-         * @param token The JWT token.
-         * @param body The XML body request to send.
-         * @param resCode The response code.
-         * @param jsonSchemaPath The JSON Schema Path. ex : "resources/jsonSchema/jsonSchemaName.json"
-         */
-    void putXml(String url, String token, Object body, int resCode, String jsonSchemaPath);
-
-        /**
-         * Put request using basic auth for authentication and XML for request body.
+         * Put request, basic authentication and XML request body usage.
          * @param url The URL of endpoint.
          * @param username The username.
          * @param password The password.
@@ -195,18 +164,7 @@ public interface Request {
     void putXml(String url, String username, String password, Object body, int resCode);
 
         /**
-         * Put request using basic auth for authentication and XML for request body.
-         * @param url The URL of endpoint.
-         * @param username The username.
-         * @param password The password.
-         * @param body The XML body request to send.
-         * @param resCode The response code.
-         * @param jsonSchemaPath The JSON Schema Path. ex : "resources/jsonSchema/jsonSchemaName.json"
-         */
-    void putXml(String url, String username, String password, Object body, int resCode, String jsonSchemaPath);
-
-        /**
-         * Put request using JWT Token for authentication and Multipart/form-data for request body.
+         * Put request, JWT token authentication and multipart/form-data request body usage.
          * @param url The URL of endpoint.
          * @param token The JWT token.
          * @param body The Multipart/form-data body request to send.
@@ -215,7 +173,7 @@ public interface Request {
     void putMultipart(String url, String token, Object body, int resCode);
 
         /**
-         * Put request using JWT Token for authentication and Multipart/form-data for request body.
+         * Put request, JWT token authentication and multipart/form-data request body and JSON schema validation usage.
          * @param url The URL of endpoint.
          * @param token The JWT token.
          * @param body The Multipart/form-data body request to send.
@@ -225,7 +183,7 @@ public interface Request {
     void putMultipart(String url, String token, Object body, int resCode, String jsonSchemaPath);
 
         /**
-         * Put request using basic auth for authentication and Multipart/form-data for request body.
+         * Put request, basic authentication and multipart/form-data request body usage.
          * @param url The URL of endpoint.
          * @param username The username.
          * @param password The password.
@@ -235,7 +193,7 @@ public interface Request {
     void putMultipart(String url, String username, String password, Object body, int resCode);
 
         /**
-         * Put request using basic auth for authentication and Multipart/form-data for request body.
+         * Put request, basic authentication, multipart/form-data request body and JSON schema validation usage.
          * @param url The URL of endpoint.
          * @param username The username.
          * @param password The password.
@@ -246,7 +204,7 @@ public interface Request {
     void putMultipart(String url, String username, String password, Object body, int resCode, String jsonSchemaPath);
 
         /**
-         * Get request using JWT Token for authentication.
+         * Get request and JWT token authentication usage.
          * @param url The URL of endpoint.
          * @param token The JWT token.
          * @param resCode The response code.
@@ -254,7 +212,7 @@ public interface Request {
     void get(String url, String token, int resCode);
 
         /**
-         * Get request using JWT Token for authentication and JSON Schema Path..
+         * Get request, JWT token authentication and JSON schema validation usage.
          * @param url The URL of endpoint.
          * @param token The JWT token.
          * @param resCode The response code.
@@ -263,7 +221,7 @@ public interface Request {
     void get(String url, String token, int resCode, String jsonSchemaPath);
 
         /**
-         * Get request using basic auth for authentication.
+         * Get request and basic authentication usage.
          * @param url The URL of endpoint.
          * @param username The username.
          * @param password The password.
@@ -272,7 +230,7 @@ public interface Request {
     void get(String url, String username, String password, int resCode);
 
         /**
-         * Get request using basic auth for authentication and JSON Schema Path.
+         * Get request, basic authentication and JSON schema validation usage.
          * @param url The URL of endpoint.
          * @param username The username.
          * @param password The password.
@@ -282,7 +240,7 @@ public interface Request {
     void get(String url, String username, String password, int resCode, String jsonSchemaPath);
 
         /**
-         * Delete request using JWT Token for authentication.
+         * Delete request and JWT token authentication usage.
          * @param url The URL of endpoint.
          * @param token The JWT token.
          * @param resCode The response code.
@@ -290,7 +248,7 @@ public interface Request {
     void delete(String url, String token, int resCode);
 
         /**
-         * Delete request using JWT Token for authentication and JSON Schema Path.
+         * Delete request, JWT token authentication and JSON schema validation usage.
          * @param url The URL of endpoint.
          * @param token The JWT token.
          * @param resCode The response code.
@@ -299,7 +257,7 @@ public interface Request {
     void delete(String url, String token, int resCode, String jsonSchemaPath);
 
         /**
-         * Delete request using basic auth for authentication.
+         * Delete request and basic authentication usage.
          * @param url The URL of endpoint.
          * @param username The username.
          * @param password The password.
@@ -308,7 +266,7 @@ public interface Request {
     void delete(String url, String username, String password, int resCode);
 
         /**
-         * Get request using basic auth for authentication and JSON Schema Path.
+         * Delete request, basic authentication and JSON schema validation usage.
          * @param url The URL of endpoint.
          * @param username The username.
          * @param password The password.
@@ -318,7 +276,7 @@ public interface Request {
     void delete(String url, String username, String password, int resCode, String jsonSchemaPath);
 
         /**
-         * Patch request using JWT Token for authentication.
+         * Patch request and JWT token authentication usage.
          * @param url The URL of endpoint.
          * @param token The JWT token.
          * @param resCode The response code.
@@ -326,7 +284,7 @@ public interface Request {
     void patch(String url, String token, int resCode);
 
         /**
-         * Patch request using JWT Token for authentication and JSON Schema Path.
+         * Patch request, JWT token authentication and JSON schema validation usage.
          * @param url The URL of endpoint.
          * @param token The JWT token.
          * @param resCode The response code.
@@ -335,7 +293,7 @@ public interface Request {
     void patch(String url, String token, int resCode, String jsonSchemaPath);
 
         /**
-         * Patch request using basic auth for authentication.
+         * Patch request and basic authentication usage.
          * @param url The URL of endpoint.
          * @param username The username.
          * @param password The password.
@@ -344,7 +302,7 @@ public interface Request {
     void patch(String url, String username, String password, int resCode);
 
         /**
-         * Patch request using basic auth for authentication and JSON Schema Path.
+         * Patch request, basic authentication and JSON schema validation usage.
          * @param url The URL of endpoint.
          * @param username The username.
          * @param password The password.
@@ -354,7 +312,7 @@ public interface Request {
     void patch(String url, String username, String password, int resCode, String jsonSchemaPath);
 
         /**
-         * Patch request using JWT Token for authentication and JSON for request body.
+         * Patch request, JWT token authentication and JSON request body usage.
          * @param url The URL of endpoint.
          * @param token The JWT token.
          * @param body The JSON body request to send.
@@ -363,7 +321,7 @@ public interface Request {
     void patch(String url, String token, Object body, int resCode);
 
         /**
-         * Patch request using JWT Token for authentication and JSON for request body.
+         * Patch request, JWT token authentication, JSON request body and JSON schema validation usage.
          * @param url The URL of endpoint.
          * @param token The JWT token.
          * @param body The JSON body request to send.
@@ -373,7 +331,7 @@ public interface Request {
     void patch(String url, String token, Object body, int resCode, String jsonSchemaPath);
 
         /**
-         * Patch request using basic auth for authentication and JSON for request body usage.
+         * Patch request, basic authentication and JSON request body usage.
          * @param url The URL of endpoint.
          * @param username The username.
          * @param password The password.
@@ -383,7 +341,7 @@ public interface Request {
     void patch(String url, String username, String password, Object body, int resCode);
 
         /**
-         * Patch request using basic auth for authentication and JSON for request body usage.
+         * Patch request, basic authentication, JSON request body and JSON schema validation usage.
          * @param url The URL of endpoint.
          * @param username The username.
          * @param password The password.
@@ -394,7 +352,7 @@ public interface Request {
     void patch(String url, String username, String password, Object body, int resCode, String jsonSchemaPath);
 
         /**
-         * Patch request using JWT Token for authentication and XML for request body usage.
+         * Patch request, JWT token authentication and XML request body usage.
          * @param url The URL of endpoint.
          * @param token The JWT token.
          * @param body The XML body request to send.
@@ -403,17 +361,7 @@ public interface Request {
     void patchXml(String url, String token, Object body, int resCode);
 
         /**
-         * Patch request using JWT Token for authentication and XML for request body usage.
-         * @param url The URL of endpoint.
-         * @param token The JWT token.
-         * @param body The XML body request to send.
-         * @param resCode The response code.
-         * @param jsonSchemaPath The JSON Schema Path. ex : "resources/jsonSchema/jsonSchemaName.json"
-         */
-    void patchXml(String url, String token, Object body, int resCode, String jsonSchemaPath);
-
-        /**
-         * Patch request using basic auth for authentication and XML for request body usage.
+         * Patch request, basic authentication and XML request body usage.
          * @param url The URL of endpoint.
          * @param username The username.
          * @param password The password.
@@ -423,18 +371,7 @@ public interface Request {
     void patchXml(String url, String username, String password, Object body, int resCode);
 
         /**
-         * Patch request using basic auth for authentication and XML for request body usage.
-         * @param url The URL of endpoint.
-         * @param username The username.
-         * @param password The password.
-         * @param body The XML body request to send.
-         * @param resCode The response code.
-         * @param jsonSchemaPath The JSON Schema Path. ex : "resources/jsonSchema/jsonSchemaName.json"
-         */
-    void patchXml(String url, String username, String password, Object body, int resCode, String jsonSchemaPath);
-
-        /**
-         * Patch request using JWT Token for authentication and Multipart/form-data for request body usage.
+         * Patch request, JWT token authentication and multipart/form-data request body usage.
          * @param url The URL of endpoint.
          * @param token The JWT token.
          * @param body The Multipart/form-data body request to send.
@@ -443,7 +380,7 @@ public interface Request {
     void patchMultipart(String url, String token, Object body, int resCode);
 
         /**
-         * Patch request using JWT Token for authentication and Multipart/form-data for request body usage.
+         * Patch request, JWT token authentication, multipart/form-data request body and JSON schema validation usage.
          * @param url The URL of endpoint.
          * @param token The JWT token.
          * @param body The Multipart/form-data body request to send.
@@ -453,7 +390,7 @@ public interface Request {
     void patchMultipart(String url, String token, Object body, int resCode, String jsonSchemaPath);
 
         /**
-         * Patch request using basic auth for authentication and Multipart/form-data for request body usage.
+         * Patch request, basic authentication and multipart/form-data request body usage.
          * @param url The URL of endpoint.
          * @param username The username.
          * @param password The password.
@@ -463,7 +400,7 @@ public interface Request {
     void patchMultipart(String url, String username, String password, Object body, int resCode);
 
         /**
-         * Post request using basic auth for authentication and Multipart/form-data for request body usage.
+         * Patch request, basic authentication, multipart/form-data request body and JSON schema validation usage.
          * @param url The URL of endpoint.
          * @param username The username.
          * @param password The password.
