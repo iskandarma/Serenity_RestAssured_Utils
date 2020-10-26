@@ -1,9 +1,20 @@
 package quality.architect.request;
 
-    /**
+import java.util.Map;
+
+/**
      * All request method
      **/
 public interface Request {
+
+        /**
+         * Get token from endpoint login with post request method usage.
+         * @param url The URL of endpoint login.
+         * @param body The login body request.
+         * @param tokenPath The token path from login response.
+         * @return value of token that can use for authentication.
+         */
+    String getToken(String url, Object body, String tokenPath);
 
         /**
          * Post request, JWT token authentication and JSON request body usage.
@@ -71,7 +82,7 @@ public interface Request {
          * @param body The multipart/form-data body request to send.
          * @param resCode The response code.
          */
-    void postMultipart(String url, String token, Object body, int resCode);
+    void postMultipart(String url, String token, Map<String,Object> body, int resCode);
 
         /**
          * Post request, JWT token authentication, multipart/form-data request body and JSON schema validation usage.
@@ -81,7 +92,7 @@ public interface Request {
          * @param resCode The response code.
          * @param jsonSchemaPath The JSON schema path. ex => "jsonSchema/jsonSchemaName.json".
          */
-    void postMultipart(String url, String token, Object body, int resCode, String jsonSchemaPath);
+    void postMultipart(String url, String token, Map<String,Object> body, int resCode, String jsonSchemaPath);
 
         /**
          * Post request, basic authentication and multipart/form-data request body usage.
@@ -91,7 +102,7 @@ public interface Request {
          * @param body The multipart/form-data body request to send.
          * @param resCode The response code.
          */
-    void postMultipart(String url, String username, String password, Object body, int resCode);
+    void postMultipart(String url, String username, String password, Map<String,Object> body, int resCode);
 
         /**
          * Post request, basic authentication, multipart/form-data request body and JSON schema validation usage.
@@ -102,7 +113,7 @@ public interface Request {
          * @param resCode The response code.
          * @param jsonSchemaPath The JSON schema path. ex => "jsonSchema/jsonSchemaName.json".
          */
-    void postMultipart(String url, String username, String password, Object body, int resCode, String jsonSchemaPath);
+    void postMultipart(String url, String username, String password, Map<String,Object> body, int resCode, String jsonSchemaPath);
 
         /**
          * Put request, JWT token authentication and JSON request body usage.
@@ -170,7 +181,7 @@ public interface Request {
          * @param body The multipart/form-data body request to send.
          * @param resCode The response code.
          */
-    void putMultipart(String url, String token, Object body, int resCode);
+    void putMultipart(String url, String token, Map<String,Object> body, int resCode);
 
         /**
          * Put request, JWT token authentication and multipart/form-data request body and JSON schema validation usage.
@@ -180,7 +191,7 @@ public interface Request {
          * @param resCode The response code.
          * @param jsonSchemaPath The JSON schema path. ex => "jsonSchema/jsonSchemaName.json".
          */
-    void putMultipart(String url, String token, Object body, int resCode, String jsonSchemaPath);
+    void putMultipart(String url, String token, Map<String,Object> body, int resCode, String jsonSchemaPath);
 
         /**
          * Put request, basic authentication and multipart/form-data request body usage.
@@ -190,7 +201,7 @@ public interface Request {
          * @param body The multipart/form-data body request to send.
          * @param resCode The response code.
          */
-    void putMultipart(String url, String username, String password, Object body, int resCode);
+    void putMultipart(String url, String username, String password, Map<String,Object> body, int resCode);
 
         /**
          * Put request, basic authentication, multipart/form-data request body and JSON schema validation usage.
@@ -201,7 +212,7 @@ public interface Request {
          * @param resCode The response code.
          * @param jsonSchemaPath The JSON schema path. ex => "jsonSchema/jsonSchemaName.json".
          */
-    void putMultipart(String url, String username, String password, Object body, int resCode, String jsonSchemaPath);
+    void putMultipart(String url, String username, String password, Map<String,Object> body, int resCode, String jsonSchemaPath);
 
         /**
          * Get request and JWT token authentication usage.
@@ -377,7 +388,7 @@ public interface Request {
          * @param body The multipart/form-data body request to send.
          * @param resCode The response code.
          */
-    void patchMultipart(String url, String token, Object body, int resCode);
+    void patchMultipart(String url, String token, Map<String,Object> body, int resCode);
 
         /**
          * Patch request, JWT token authentication, multipart/form-data request body and JSON schema validation usage.
@@ -387,7 +398,7 @@ public interface Request {
          * @param resCode The response code.
          * @param jsonSchemaPath The JSON schema path. ex => "jsonSchema/jsonSchemaName.json".
          */
-    void patchMultipart(String url, String token, Object body, int resCode, String jsonSchemaPath);
+    void patchMultipart(String url, String token, Map<String,Object> body, int resCode, String jsonSchemaPath);
 
         /**
          * Patch request, basic authentication and multipart/form-data request body usage.
@@ -397,7 +408,7 @@ public interface Request {
          * @param body The multipart/form-data body request to send.
          * @param resCode The response code.
          */
-    void patchMultipart(String url, String username, String password, Object body, int resCode);
+    void patchMultipart(String url, String username, String password, Map<String,Object> body, int resCode);
 
         /**
          * Patch request, basic authentication, multipart/form-data request body and JSON schema validation usage.
@@ -408,6 +419,6 @@ public interface Request {
          * @param resCode The response code.
          * @param jsonSchemaPath The JSON schema path. ex => "jsonSchema/jsonSchemaName.json".
          */
-    void patchMultipart(String url, String username, String password, Object body, int resCode, String jsonSchemaPath);
+    void patchMultipart(String url, String username, String password, Map<String,Object> body, int resCode, String jsonSchemaPath);
 
 }

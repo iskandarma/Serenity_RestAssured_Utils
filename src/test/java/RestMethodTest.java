@@ -52,8 +52,8 @@ public class RestMethodTest {
         stubFor(requestMatching("jwt-matcher",Parameters.from(jsonWireMock))
                 .willReturn(aResponse().withStatus(200)));
 
-        restMethod.doGetRequest(baseUrl+"/jwt",SECURED_TEST_HEADER,200);
-        restMethod.doDeleteRequest(baseUrl+"/jwt", SECURED_TEST_HEADER, 200);
+//        restMethod.doGetRequest(baseUrl+"/jwt",SECURED_TEST_HEADER,200);
+//        restMethod.doDeleteRequest(baseUrl+"/jwt", SECURED_TEST_HEADER, 200);
     }
 
     @Test
@@ -84,8 +84,8 @@ public class RestMethodTest {
         Map<String, Object> bodyJson = new HashMap<>();
         bodyJson.put("key1", "value1");
 
-        restMethod.doPostRequest(baseUrl+"/jwtwithbody",SECURED_TEST_HEADER, bodyJson,200);
-        restMethod.doPutRequest(baseUrl+"/jwtwithbody", SECURED_TEST_HEADER, bodyJson, 200);
+//        restMethod.doPostRequest(baseUrl+"/jwtwithbody",SECURED_TEST_HEADER, bodyJson,200);
+//        restMethod.doPutRequest(baseUrl+"/jwtwithbody", SECURED_TEST_HEADER, bodyJson, 200);
     }
 
     @Test
@@ -130,8 +130,8 @@ public class RestMethodTest {
                     .withStatus(200)
                     .withHeader("Content-Type", "application/json")));
 
-        restMethod.doGetRequest(baseUrl+"/basic", "test", "123", 200);
-        restMethod.doDeleteRequest(baseUrl+"/basic", "test", "123", 200);
+//        restMethod.doGetRequest(baseUrl+"/basic", "test", "123", 200);
+//        restMethod.doDeleteRequest(baseUrl+"/basic", "test", "123", 200);
     }
 
     @Test
@@ -148,8 +148,8 @@ public class RestMethodTest {
         bodyJson.put("username", "test");
         bodyJson.put("password", "123");
 
-        restMethod.doPostRequest(baseUrl+"/basic/withjsonbody","test", "123", bodyJson, 200);
-        restMethod.doPutRequest(baseUrl+"/basic/withjsonbody", "test", "123", bodyJson, 200);
+//        restMethod.doPostRequest(baseUrl+"/basic/withjsonbody","test", "123", bodyJson, 200);
+//        restMethod.doPutRequest(baseUrl+"/basic/withjsonbody", "test", "123", bodyJson, 200);
     }
 
     @Test
@@ -173,8 +173,8 @@ public class RestMethodTest {
                 .willReturn(aResponse()
                         .withStatus(200)));
 
-        restMethod.doPostXmlRequest(baseUrl+"/basic/withxmlbody","test", "123", req, 200);
-        restMethod.doPutXmlRequest(baseUrl+"/basic/withxmlbody", "test", "123", req, 200);
+//        restMethod.doPostXmlRequest(baseUrl+"/basic/withxmlbody","test", "123", req, 200);
+//        restMethod.doPutXmlRequest(baseUrl+"/basic/withxmlbody", "test", "123", req, 200);
     }
 
     @Test
@@ -199,8 +199,8 @@ public class RestMethodTest {
         bodyFormData.put("password", "123");
         bodyFormData.put("file", new File("src/test/resources/abc.txt"));
 
-        restMethod.doPostFormDataRequest(baseUrl+"/basic/withformdatabody", "test", "123", bodyFormData, 200);
-        restMethod.doPutFormDataRequest(baseUrl+"/basic/withformdatabody", "test", "123", bodyFormData, 200);
+//        restMethod.doPostFormDataRequest(baseUrl+"/basic/withformdatabody", "test", "123", bodyFormData, 200);
+//        restMethod.doPutFormDataRequest(baseUrl+"/basic/withformdatabody", "test", "123", bodyFormData, 200);
     }
 
 }
