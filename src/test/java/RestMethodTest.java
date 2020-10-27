@@ -1,4 +1,3 @@
-import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.common.ConsoleNotifier;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import com.github.tomakehurst.wiremock.extension.Parameters;
@@ -7,6 +6,7 @@ import net.serenitybdd.rest.SerenityRest;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import quality.architect.request.Request;
 import quality.architect.request.RestMethod;
 
 import java.io.File;
@@ -14,12 +14,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
-import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
-import static org.junit.Assert.assertTrue;
 
 public class RestMethodTest {
 
-    private RestMethod restMethod;
+    private Request request;
     private String baseUrl;
     private final String SECURED_TEST_HEADER = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiQWRtaW4iLCJpZCI6IjEyMyJ9.AqKRNmhFn3xyl7lvtt1pCsvj8OfIh5RpzmKeCZpdEbI";
 
@@ -28,7 +26,7 @@ public class RestMethodTest {
 
     @Before
     public void before(){
-        restMethod = new RestMethod();
+        request = new RestMethod();
         baseUrl = "http://localhost:8089";
     }
 
@@ -50,14 +48,18 @@ public class RestMethodTest {
         }});
 
         stubFor(requestMatching("jwt-matcher",Parameters.from(jsonWireMock))
-                .willReturn(aResponse().withStatus(200)));
+                .willReturn(okJson("{ \"message\": \"Hello\" }")));
 
-//        restMethod.doGetRequest(baseUrl+"/jwt",SECURED_TEST_HEADER,200);
-//        restMethod.doDeleteRequest(baseUrl+"/jwt", SECURED_TEST_HEADER, 200);
+        request.get(baseUrl+"/jwt",SECURED_TEST_HEADER,200);
+        request.get(baseUrl+"/jwt",SECURED_TEST_HEADER,200,"JSONSchema/response.json");
+        request.delete(baseUrl+"/jwt", SECURED_TEST_HEADER, 200);
+        request.delete(baseUrl+"/jwt", SECURED_TEST_HEADER, 200,"JSONSchema/response.json");
+        request.patch(baseUrl+"/jwt",SECURED_TEST_HEADER,200);
+        request.patch(baseUrl+"/jwt",SECURED_TEST_HEADER,200,"JSONSchema/response.json");
     }
 
     @Test
-    public void jwtTokenWithReqBodyJson() {
+    public void jwtTokenWithJsonBodyReq() {
 
         Map<String, Object> jsonWireMock = new HashMap<>();
         jsonWireMock.put("header", new HashMap<String, String>(){{
@@ -79,21 +81,56 @@ public class RestMethodTest {
         }});
 
         stubFor(requestMatching("jwt-matcher",Parameters.from(jsonWireMock))
-                .willReturn(aResponse().withStatus(200)));
+                .willReturn(okJson("{ \"message\": \"Hello\" }")));
 
         Map<String, Object> bodyJson = new HashMap<>();
         bodyJson.put("key1", "value1");
 
-//        restMethod.doPostRequest(baseUrl+"/jwtwithbody",SECURED_TEST_HEADER, bodyJson,200);
-//        restMethod.doPutRequest(baseUrl+"/jwtwithbody", SECURED_TEST_HEADER, bodyJson, 200);
+        request.post(baseUrl+"/jwtwithbody",SECURED_TEST_HEADER, bodyJson,200);
+        request.post(baseUrl+"/jwtwithbody",SECURED_TEST_HEADER, bodyJson,200,"JSONSchema/response.json");
+        request.put(baseUrl+"/jwtwithbody", SECURED_TEST_HEADER, bodyJson, 200);
+        request.put(baseUrl+"/jwtwithbody", SECURED_TEST_HEADER, bodyJson, 200,"JSONSchema/response.json");
+        request.patch(baseUrl+"/jwtwithbody", SECURED_TEST_HEADER, bodyJson, 200);
+        request.patch(baseUrl+"/jwtwithbody", SECURED_TEST_HEADER, bodyJson, 200,"JSONSchema/response.json");
+    }
+
+    @Test
+    public void basicAuth() {
+
+        givenThat(any(urlPathEqualTo("/basic"))
+                .withBasicAuth("test", "123")
+                .willReturn(okJson("{ \"message\": \"Hello\" }")));
+
+        request.get(baseUrl+"/basic", "test", "123", 200);
+        request.get(baseUrl+"/basic", "test", "123", 200, "JSONSchema/response.json");
+        request.delete(baseUrl+"/basic", "test", "123", 200);
+        request.delete(baseUrl+"/basic", "test", "123", 200, "JSONSchema/response.json");
+        request.patch(baseUrl+"/basic", "test", "123", 200);
+        request.patch(baseUrl+"/basic", "test", "123", 200,"JSONSchema/response.json");
+    }
+
+    @Test
+    public void basicAuthWithJsonBodyReq() {
+
+        givenThat(any(urlPathEqualTo("/basic/withjsonbody"))
+                .withBasicAuth("test", "123")
+                .withRequestBody(equalToJson("{\"username\" : \"test\", \"password\" : \"123\"}"))
+                .willReturn(okJson("{ \"message\": \"Hello\" }")));
+
+        Map<String, Object> bodyJson = new HashMap<>();
+        bodyJson.put("username", "test");
+        bodyJson.put("password", "123");
+
+        request.post(baseUrl+"/basic/withjsonbody","test", "123", bodyJson, 200);
+        request.post(baseUrl+"/basic/withjsonbody","test", "123", bodyJson, 200, "JSONSchema/response.json");
+        request.put(baseUrl+"/basic/withjsonbody", "test", "123", bodyJson, 200);
+        request.put(baseUrl+"/basic/withjsonbody", "test", "123", bodyJson, 200, "JSONSchema/response.json");
+        request.patch(baseUrl+"/basic/withjsonbody", "test", "123", bodyJson, 200);
+        request.patch(baseUrl+"/basic/withjsonbody", "test", "123", bodyJson, 200, "JSONSchema/response.json");
     }
 
     @Test
     public void jwtTokenWithMultiPartReqBody(){
-
-        Map<String, Object> bodyFormData = new HashMap<>();
-        bodyFormData.put("username", "test");
-        bodyFormData.put("password", "123");
 
         givenThat(post(urlPathEqualTo("/basic/withformdatabody"))
                 .withMultipartRequestBody(aMultipart()
@@ -105,51 +142,14 @@ public class RestMethodTest {
                 .withMultipartRequestBody(aMultipart()
                         .withName("file")
                         .withBody(binaryEqualTo("ABCD".getBytes())))
-                .willReturn(aResponse()
-                        .withStatus(200)));
+                .willReturn(okJson("{ \"message\": \"Hello\" }")));
 
-        SerenityRest
-                .given()
-                .multiPart("username", "test")
-                .multiPart("password", "123")
-                .multiPart("file", new File("src/test/resources/abc.txt"))
-                .when()
-                .post(baseUrl+"/basic/withformdatabody")
-                .then()
-                .statusCode(200);
+        Map<String, Object> bodyFormData = new HashMap<>();
+        bodyFormData.put("username", "test");
+        bodyFormData.put("password", "123");
+        bodyFormData.put("file", new File("src/test/resources/abc.txt"));
 
-//        restClient.doPostFormDataRequest(baseUrl+"/basic/withformdatabody", "test", "123", bodyFormData, 200);
-    }
-
-    @Test
-    public void basicAuth() {
-
-        givenThat(any(urlPathEqualTo("/basic"))
-                .withBasicAuth("test", "123")
-                .willReturn(aResponse()
-                    .withStatus(200)
-                    .withHeader("Content-Type", "application/json")));
-
-//        restMethod.doGetRequest(baseUrl+"/basic", "test", "123", 200);
-//        restMethod.doDeleteRequest(baseUrl+"/basic", "test", "123", 200);
-    }
-
-    @Test
-    public void basicAuthWithJsonBodyReq() {
-
-        givenThat(any(urlPathEqualTo("/basic/withjsonbody"))
-                .withBasicAuth("test", "123")
-                .withRequestBody(equalToJson("{\"username\" : \"test\", \"password\" : \"123\"}"))
-                .willReturn(aResponse()
-                        .withStatus(200)
-                        .withHeader("Content-Type", "application/json")));
-
-        Map<String, Object> bodyJson = new HashMap<>();
-        bodyJson.put("username", "test");
-        bodyJson.put("password", "123");
-
-//        restMethod.doPostRequest(baseUrl+"/basic/withjsonbody","test", "123", bodyJson, 200);
-//        restMethod.doPutRequest(baseUrl+"/basic/withjsonbody", "test", "123", bodyJson, 200);
+        request.postMultipart(baseUrl+"/basic/withformdatabody", "test", "123", bodyFormData, 200);
     }
 
     @Test
@@ -173,8 +173,8 @@ public class RestMethodTest {
                 .willReturn(aResponse()
                         .withStatus(200)));
 
-//        restMethod.doPostXmlRequest(baseUrl+"/basic/withxmlbody","test", "123", req, 200);
-//        restMethod.doPutXmlRequest(baseUrl+"/basic/withxmlbody", "test", "123", req, 200);
+        request.postXml(baseUrl+"/basic/withxmlbody","test", "123", req, 200);
+        request.putXml(baseUrl+"/basic/withxmlbody", "test", "123", req, 200);
     }
 
     @Test
@@ -199,8 +199,8 @@ public class RestMethodTest {
         bodyFormData.put("password", "123");
         bodyFormData.put("file", new File("src/test/resources/abc.txt"));
 
-//        restMethod.doPostFormDataRequest(baseUrl+"/basic/withformdatabody", "test", "123", bodyFormData, 200);
-//        restMethod.doPutFormDataRequest(baseUrl+"/basic/withformdatabody", "test", "123", bodyFormData, 200);
+        request.postMultipart(baseUrl+"/basic/withformdatabody", "test", "123", bodyFormData, 200);
+        request.putMultipart(baseUrl+"/basic/withformdatabody", "test", "123", bodyFormData, 200);
     }
 
 }
