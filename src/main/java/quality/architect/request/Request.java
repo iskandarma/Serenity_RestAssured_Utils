@@ -151,7 +151,7 @@ public interface Request {
          * @param password The password.
          * @param body The JSON body request to send.
          * @param resCode The response code.
-         * @param jsonSchemaPath The JSON schema path. ex => "jsonSchema/jsonSchemaName.json".
+         * @param jsonSchemaPath The JSON schema path. ex = "jsonSchema/jsonSchemaName.json".
          */
     void put(String url, String username, String password, Object body, int resCode, String jsonSchemaPath);
 
@@ -189,7 +189,7 @@ public interface Request {
          * @param token The JWT token.
          * @param body The multipart/form-data body request to send.
          * @param resCode The response code.
-         * @param jsonSchemaPath The JSON schema path. ex => "jsonSchema/jsonSchemaName.json".
+         * @param jsonSchemaPath The JSON schema path. ex = "jsonSchema/jsonSchemaName.json".
          */
     void putMultipart(String url, String token, Map<String,Object> body, int resCode, String jsonSchemaPath);
 
@@ -210,7 +210,7 @@ public interface Request {
          * @param password The password.
          * @param body The multipart/form-data body request to send.
          * @param resCode The response code.
-         * @param jsonSchemaPath The JSON schema path. ex => "jsonSchema/jsonSchemaName.json".
+         * @param jsonSchemaPath The JSON schema path. ex = "jsonSchema/jsonSchemaName.json".
          */
     void putMultipart(String url, String username, String password, Map<String,Object> body, int resCode, String jsonSchemaPath);
 
@@ -227,7 +227,7 @@ public interface Request {
          * @param url The URL of endpoint.
          * @param token The JWT token.
          * @param resCode The response code.
-         * @param jsonSchemaPath The JSON schema path. ex => "jsonSchema/jsonSchemaName.json".
+         * @param jsonSchemaPath The JSON schema path. ex = "jsonSchema/jsonSchemaName.json".
          */
     void get(String url, String token, int resCode, String jsonSchemaPath);
 
@@ -246,7 +246,7 @@ public interface Request {
          * @param username The username.
          * @param password The password.
          * @param resCode The response code.
-         * @param jsonSchemaPath The JSON schema path. ex => "jsonSchema/jsonSchemaName.json".
+         * @param jsonSchemaPath The JSON schema path. ex = "jsonSchema/jsonSchemaName.json".
          */
     void get(String url, String username, String password, int resCode, String jsonSchemaPath);
 
@@ -263,7 +263,7 @@ public interface Request {
          * @param url The URL of endpoint.
          * @param token The JWT token.
          * @param resCode The response code.
-         * @param jsonSchemaPath The JSON schema path. ex => "jsonSchema/jsonSchemaName.json".
+         * @param jsonSchemaPath The JSON schema path. ex = "jsonSchema/jsonSchemaName.json".
          */
     void delete(String url, String token, int resCode, String jsonSchemaPath);
 
@@ -282,7 +282,7 @@ public interface Request {
          * @param username The username.
          * @param password The password.
          * @param resCode The response code.
-         * @param jsonSchemaPath The JSON schema path. ex => "jsonSchema/jsonSchemaName.json".
+         * @param jsonSchemaPath The JSON schema path. ex = "jsonSchema/jsonSchemaName.json".
          */
     void delete(String url, String username, String password, int resCode, String jsonSchemaPath);
 
@@ -299,7 +299,7 @@ public interface Request {
          * @param url The URL of endpoint.
          * @param token The JWT token.
          * @param resCode The response code.
-         * @param jsonSchemaPath The JSON schema path. ex => "jsonSchema/jsonSchemaName.json".
+         * @param jsonSchemaPath The JSON schema path. ex = "jsonSchema/jsonSchemaName.json".
          */
     void patch(String url, String token, int resCode, String jsonSchemaPath);
 
@@ -318,7 +318,7 @@ public interface Request {
          * @param username The username.
          * @param password The password.
          * @param resCode The response code.
-         * @param jsonSchemaPath The JSON schema path. ex => "jsonSchema/jsonSchemaName.json".
+         * @param jsonSchemaPath The JSON schema path. ex = "jsonSchema/jsonSchemaName.json".
          */
     void patch(String url, String username, String password, int resCode, String jsonSchemaPath);
 
@@ -337,7 +337,7 @@ public interface Request {
          * @param token The JWT token.
          * @param body The JSON body request to send.
          * @param resCode The response code.
-         * @param jsonSchemaPath The JSON schema path. ex => "jsonSchema/jsonSchemaName.json".
+         * @param jsonSchemaPath The JSON schema path. ex = "jsonSchema/jsonSchemaName.json".
          */
     void patch(String url, String token, Object body, int resCode, String jsonSchemaPath);
 
@@ -358,7 +358,7 @@ public interface Request {
          * @param password The password.
          * @param body The JSON body request to send.
          * @param resCode The response code.
-         * @param jsonSchemaPath The JSON schema path. ex => "jsonSchema/jsonSchemaName.json".
+         * @param jsonSchemaPath The JSON schema path. ex = "jsonSchema/jsonSchemaName.json".
          */
     void patch(String url, String username, String password, Object body, int resCode, String jsonSchemaPath);
 
@@ -396,7 +396,7 @@ public interface Request {
          * @param token The JWT token.
          * @param body The multipart/form-data body request to send.
          * @param resCode The response code.
-         * @param jsonSchemaPath The JSON schema path. ex => "jsonSchema/jsonSchemaName.json".
+         * @param jsonSchemaPath The JSON schema path. ex = "jsonSchema/jsonSchemaName.json".
          */
     void patchMultipart(String url, String token, Map<String,Object> body, int resCode, String jsonSchemaPath);
 
@@ -417,7 +417,7 @@ public interface Request {
          * @param password The password.
          * @param body The multipart/form-data body request to send.
          * @param resCode The response code.
-         * @param jsonSchemaPath The JSON schema path. ex => "jsonSchema/jsonSchemaName.json".
+         * @param jsonSchemaPath The JSON schema path. ex = "jsonSchema/jsonSchemaName.json".
          */
     void patchMultipart(String url, String username, String password, Map<String,Object> body, int resCode, String jsonSchemaPath);
 
